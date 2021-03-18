@@ -1,6 +1,13 @@
 export namespace ModuleLoaders{
-  export const landingLoader = () => import(
-    /* webpackChunkName: "Landing" */
+
+  export const adminAuthLoader = () => import(
+    /* webpackChunkName: "AdminAuth" */
     /* webpackPrefetch: true */
-    '../components/Landing');
+    '../components/AdminAuth/AdminAuth'
+  )
+
+  export const dashboardLoader = () => import(
+    /* webpackChunkName: "Dashboard" */
+    /* webpackPrefetch: true */
+    '../components/Dashboard/Dashboard');
 }

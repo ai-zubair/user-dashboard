@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { AsyncRoute, ComponentProps } from './hoc/AsyncRoute';
+import { AsyncRoute, ComponentProps } from './components/hoc/AsyncRoute';
 import { ModuleLoaders } from './config/routeModuleLoaders';
 class App extends Component {
   render() {
@@ -10,7 +10,7 @@ class App extends Component {
           <Route
             path="/"
             exact
-            component={(props: ComponentProps) => <AsyncRoute componentLoader={ModuleLoaders.landingLoader} componentProps={props} />}
+            component={(props: ComponentProps) => <AsyncRoute componentLoader={ModuleLoaders.adminAuthLoader} componentProps={props} />}
           />
         </Switch>
       </BrowserRouter>
