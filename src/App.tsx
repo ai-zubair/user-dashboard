@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { appDataStore } from './data-store/store';
 import { AsyncRoute, ComponentProps } from './components/hoc/AsyncRoute';
 import { ModuleLoaders } from './config/routeModuleLoaders';
 class App extends Component {
   render() {
     return (
-      <BrowserRouter>
+      <Provider store={appDataStore}>
         <Switch>
           <Route
             path="/"
@@ -13,7 +15,7 @@ class App extends Component {
             component={(props: ComponentProps) => <AsyncRoute componentLoader={ModuleLoaders.adminAuthLoader} componentProps={props} />}
           />
         </Switch>
-      </BrowserRouter>
+      </Provider>
     )
   }
 }
