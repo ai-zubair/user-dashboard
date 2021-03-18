@@ -4,15 +4,21 @@ import Button from '../Button/Button';
 
 interface FormProps{
   children?: ReactChild[];
+  submitButtonText: string;
   isSubmitButtonDisabled: boolean;
+  showSubmitLoader: boolean;
   onSubmit(): void;
 }
 
-const Form: FunctionComponent<FormProps> = ({children, onSubmit, isSubmitButtonDisabled}) => {
+const Form: FunctionComponent<FormProps> = ({children, submitButtonText, onSubmit, showSubmitLoader, isSubmitButtonDisabled}) => {
   return (
     <FormWrapper onSubmit={isSubmitButtonDisabled ? (event) => {event.preventDefault()}: (event)=>{event.preventDefault(),onSubmit()}}>
       {children}
-      <Button isButtonDisabled={isSubmitButtonDisabled} buttonText="Login"/>
+      <Button 
+        showLoader={showSubmitLoader} 
+        isButtonDisabled={isSubmitButtonDisabled} 
+        buttonText={submitButtonText}
+      />
     </FormWrapper>
   )
 }

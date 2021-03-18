@@ -30,7 +30,8 @@ class AdminAuth extends Component<AdminAuthProps> {
       username,
       password,
       setUserName,
-      setPassword
+      setPassword,
+      isSubmitLoaderVisible,
     } = this.props;
 
     const {
@@ -44,7 +45,12 @@ class AdminAuth extends Component<AdminAuthProps> {
       <Fragment>
         <Header />
           <AdminAuthWrapper>
-            <Form onSubmit={this.onAuthFormSubmit} isSubmitButtonDisabled={isSubmitButtonDisabled}>
+            <Form 
+              onSubmit={this.onAuthFormSubmit} 
+              showSubmitLoader={isSubmitLoaderVisible} 
+              submitButtonText={"Login"}
+              isSubmitButtonDisabled={isSubmitButtonDisabled}
+            >
               <InputFormField 
                 fieldID={USERNAME.id} 
                 fieldLabel={USERNAME.label} 
@@ -72,7 +78,8 @@ class AdminAuth extends Component<AdminAuthProps> {
 
 const mapStateToProps = ({adminAuthData}: AppState) => ({
   username: adminAuthData.authData.username,
-  password: adminAuthData.authData.password
+  password: adminAuthData.authData.password,
+  isSubmitLoaderVisible: adminAuthData.isSubmitLoaderVisible
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) =>({
