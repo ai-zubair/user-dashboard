@@ -33,7 +33,7 @@ class AdminAuth extends Component<AdminAuthProps> {
       <Fragment>
         <Header />
           <AdminAuthWrapper>
-            <Form>
+            <Form isSubmitButtonDisabled={!USERNAME.validator(username) || !PASSWORD.validator(password)}>
               <InputFormField 
                 fieldID={USERNAME.id} 
                 fieldLabel={USERNAME.label} 

@@ -4,13 +4,14 @@ import Button from '../Button/Button';
 
 interface FormProps{
   children?: ReactChild[];
+  isSubmitButtonDisabled: boolean;
 }
 
-const Form: FunctionComponent<FormProps> = ({children}) => {
+const Form: FunctionComponent<FormProps> = ({children, isSubmitButtonDisabled}) => {
   return (
     <FormWrapper>
       {children}
-      <Button buttonText="Login"/>
+      <Button isButtonDisabled={isSubmitButtonDisabled} buttonText="Login"/>
     </FormWrapper>
   )
 }
