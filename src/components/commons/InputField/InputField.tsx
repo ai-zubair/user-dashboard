@@ -6,8 +6,8 @@ interface InputFieldProps{
   fieldID: string;
   fieldType: InputFieldType;
   fieldValue: string;
-  errorMessage?: string;
-  validator?: (fieldValue: string)=> boolean;
+  errorMessage: string;
+  validator: (fieldValue: string)=> boolean;
   onFieldChange:(changedValue: string)=>void;
 }
 
@@ -23,6 +23,7 @@ const Error = ({isHidden, errorMessage}:{errorMessage: string; isHidden: boolean
 
 const InputField: FunctionComponent<InputFieldProps> = ({fieldLabel, fieldID, fieldType, fieldValue, errorMessage, validator, onFieldChange}) => {
   const [errorHidden, toggleErrorHidden] = useState(true);
+
   return (
     <InputFieldWrapper>
       <label htmlFor={fieldID}>{fieldLabel}</label>
@@ -30,8 +31,8 @@ const InputField: FunctionComponent<InputFieldProps> = ({fieldLabel, fieldID, fi
         id={fieldID} 
         type={fieldType} 
         value={fieldValue} 
-        onChange={(event: ChangeEvent<HTMLInputElement>) => onFieldChange(event.target.value)}
-        onBlur={(event) => validator && toggleErrorHidden(validator(fieldValue))}
+        onChange={(event: ChangeEvent<HTMLInputElement>) => {toggleErrorHidden(validator(event.target.value)),onFieldChange(event.target.value)}}
+        onBlur={(event) => toggleErrorHidden(validator(event.target.value))}
       />
       <Error isHidden={errorHidden} errorMessage={errorMessage || ''} />
     </InputFieldWrapper>
