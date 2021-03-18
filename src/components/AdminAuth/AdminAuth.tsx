@@ -8,7 +8,7 @@ import Form from '../commons/DataForm/Form';
 import InputFormField from '../commons/InputField/InputField';
 
 import { AppState } from '../../data-store/rootReducer';
-import { setUserName, setPassword, toggleSubmitLoader } from './actionCreators';
+import { setUserName, setPassword, toggleSubmitLoader, setLoginError } from './actionCreators';
 
 import { AdminAuthProps } from './types';
 import { FORM_FIELDS } from './constants';
@@ -22,13 +22,14 @@ class AdminAuth extends Component<AdminAuthProps> {
     axios.post('https://reqres.in/api/login',{
       email: this.props.username,
       password: this.props.password
-    }).then( response => {console.log(response), this.props.toggleSubmitLoader(false);});
+    }).then( response => {console.log(response), this.props.toggleSubmitLoader(false);}).catch( err => {this.props.toggleSubmitLoader(false);this.props.setLoginError('Invalid Email/Password')});
   }
 
   render() {
     const {
       username,
       password,
+      loginError,
       setUserName,
       setPassword,
       isSubmitLoaderVisible,
@@ -39,7 +40,7 @@ class AdminAuth extends Component<AdminAuthProps> {
       PASSWORD
     } = FORM_FIELDS;
 
-    const isSubmitButtonDisabled = !USERNAME.validator(username) || !PASSWORD.validator(password);
+    const isSubmitButtonDisabled = !USERNAME.validator(username) || !PASSWORD.validator(password) || isSubmitLoaderVisible;
 
     return (
       <Fragment>
@@ -49,6 +50,7 @@ class AdminAuth extends Component<AdminAuthProps> {
               onSubmit={this.onAuthFormSubmit} 
               showSubmitLoader={isSubmitLoaderVisible} 
               submitButtonText={"Login"}
+              submitErrorMessage={loginError}
               isSubmitButtonDisabled={isSubmitButtonDisabled}
             >
               <InputFormField 
@@ -79,6 +81,7 @@ class AdminAuth extends Component<AdminAuthProps> {
 const mapStateToProps = ({adminAuthData}: AppState) => ({
   username: adminAuthData.authData.username,
   password: adminAuthData.authData.password,
+  loginError: adminAuthData.authData.loginError,
   isSubmitLoaderVisible: adminAuthData.isSubmitLoaderVisible
 })
 
@@ -88,6 +91,9 @@ const mapDispatchToProps = (dispatch: Dispatch) =>({
   },
   setPassword(password: string){
     dispatch(setPassword(password))
+  },
+  setLoginError(error: string){
+    dispatch(setLoginError(error))
   },
   toggleSubmitLoader(loaderState: boolean){
     dispatch(toggleSubmitLoader(loaderState))

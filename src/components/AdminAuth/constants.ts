@@ -1,6 +1,9 @@
-export const DEFAULT_AUTH_DATA = {
+import { AuthDataState } from "./types"
+
+export const DEFAULT_AUTH_DATA: AuthDataState = {
   username: '',
-  password: ''
+  password: '',
+  loginError: ''
 }
 
 export const DEFAULT_LOADER_STATE = false

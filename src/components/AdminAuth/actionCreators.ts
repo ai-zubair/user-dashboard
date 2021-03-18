@@ -12,6 +12,11 @@ export const setPassword: ActionCreator<TextInputFieldAction> = (password: strin
   payload: password
 })
 
+export const setLoginError: ActionCreator<TextInputFieldAction> = (error: string ) => ({
+  type: ADMIN_AUTH_ACTIONS.SET_LOGIN_ERROR,
+  payload: error
+})
+
 export const toggleSubmitLoader: ActionCreator<ToggleSubmitLoaderAction> = (loaderState: boolean) => ({
   type: ADMIN_AUTH_ACTIONS.TOGGLE_SUBMIT_LOADER,
   payload: loaderState
