@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const InputFieldWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
   label{
     margin-bottom: 5px;
     font-size: var(--label-font-size);
@@ -18,4 +19,13 @@ export const InputFieldWrapper = styled.div`
     font-weight: var(--lighter-font-weight);
     outline: none;
   }
+`;
+
+export const ErrorWrapper = styled.span`
+  color: red;
+  font-size: 14px;
+  position: absolute;
+  bottom: -18px;
+  left: 1px;
+  font-weight: 300;
 `;
