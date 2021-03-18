@@ -34,7 +34,7 @@ const InputField: FunctionComponent<InputFieldProps> = ({fieldLabel, fieldID, fi
         onChange={(event: ChangeEvent<HTMLInputElement>) => {toggleErrorHidden(validator(event.target.value)),onFieldChange(event.target.value)}}
         onBlur={(event) => toggleErrorHidden(validator(event.target.value))}
       />
-      <Error isHidden={errorHidden} errorMessage={errorMessage || ''} />
+      <Error isHidden={errorHidden} errorMessage={errorMessage} />
     </InputFieldWrapper>
   )
 }

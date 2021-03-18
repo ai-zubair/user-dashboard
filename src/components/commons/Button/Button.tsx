@@ -4,11 +4,12 @@ import { ButtonWrapper } from './ButtonStyled';
 interface ButtonProps{
   children?: ReactChild[];
   buttonText?: string;
+  isButtonDisabled?: boolean; 
 }
 
-const Button: FunctionComponent<ButtonProps> = ({buttonText, children}) => {
+const Button: FunctionComponent<ButtonProps> = ({buttonText, isButtonDisabled = false, children}) => {
   return (
-    <ButtonWrapper>
+    <ButtonWrapper isButtonDisabled={isButtonDisabled}>
       {buttonText}
       {children}
     </ButtonWrapper>
@@ -16,7 +17,7 @@ const Button: FunctionComponent<ButtonProps> = ({buttonText, children}) => {
 }
 
 Button.defaultProps = {
-  buttonText: 'Submit'
+  buttonText: 'Submit',
 }
 
 export default Button;
