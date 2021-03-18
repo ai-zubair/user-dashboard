@@ -1,0 +1,42 @@
+{
+  "name": "react-assignment",
+  "version": "1.0.0",
+  "description": "User dashboard as react assignment.",
+  "main": "src/ClientApp.tsx",
+  "scripts": {
+    "webpack": "webpack",
+    "server": "webpack serve",
+    "build:dev": "npm run server -- --env mode=development",
+    "build:prod": "npm run webpack -- --env mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ai-zubair/user-dashboard.git"
+  },
+  "author": "Zubair Bashir",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ai-zubair/user-dashboard/issues"
+  },
+  "homepage": "https://github.com/ai-zubair/user-dashboard#readme",
+  "devDependencies": {
+    "@types/styled-components": "^5.1.7",
+    "html-webpack-plugin": "^4.5.1",
+    "ts-loader": "^8.0.14",
+    "typescript": "^4.1.3",
+    "webpack": "^5.18.0",
+    "webpack-bundle-analyzer": "^4.4.0",
+    "webpack-cli": "^4.4.0",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.7.3"
+  },
+  "dependencies": {
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-router-dom": "^5.1.7",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0",
+    "styled-components": "^5.2.1"
+  }
+}
