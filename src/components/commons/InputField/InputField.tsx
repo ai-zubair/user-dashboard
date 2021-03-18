@@ -13,7 +13,7 @@ interface InputFieldProps{
 
 export type InputFieldType = "text" | "password";
 
-const Error = ({isHidden, errorMessage}:{errorMessage: string; isHidden: boolean;})=>{
+export const Error = ({isHidden, errorMessage}:{errorMessage: string; isHidden: boolean;})=>{
   if(isHidden)
     return null;
   return(

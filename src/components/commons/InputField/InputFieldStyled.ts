@@ -25,7 +25,7 @@ export const ErrorWrapper = styled.span`
   color: red;
   font-size: 14px;
   position: absolute;
-  bottom: -18px;
+  bottom: -20px;
   left: 1px;
   font-weight: 300;
 `;

@@ -5,6 +5,7 @@ export const ButtonWrapper = styled.button<{isButtonDisabled: boolean}>`
   background-color: ${props => props.isButtonDisabled ? 'transparent' : 'var(--primary-background-color)' };
   border: ${props => props.isButtonDisabled ? '2px solid var(--disabled-text-color)' : '2px solid var(--primary-background-color)' };
   box-shadow: ${props => props.isButtonDisabled ? 'none' : 'var(--container-box-shadow)' };
+  position: relative;
   outline: none;
   padding: 10px;
   border-radius: 4px;

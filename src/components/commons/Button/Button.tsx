@@ -1,15 +1,17 @@
 import React,{FunctionComponent, ReactChild} from 'react';
 import { Spinner } from '../Spinner';
 import { ButtonWrapper } from './ButtonStyled';
+import { Error } from '../InputField/InputField'
 
 interface ButtonProps{
   children?: ReactChild[];
   buttonText?: string;
   isButtonDisabled?: boolean; 
   showLoader?: boolean;
+  errorMessage?: string;
 }
 
-const Button: FunctionComponent<ButtonProps> = ({buttonText, isButtonDisabled = false, showLoader = false, children}) => {
+const Button: FunctionComponent<ButtonProps> = ({buttonText, isButtonDisabled = false, showLoader = false, errorMessage = '', children}) => {
   return (
     <ButtonWrapper isButtonDisabled={isButtonDisabled}>
       {showLoader ? null : buttonText}
@@ -19,6 +21,7 @@ const Button: FunctionComponent<ButtonProps> = ({buttonText, isButtonDisabled = 
         variant="small" 
         color="var(--primary-background-color)"
       />
+      <Error isHidden={!Boolean(errorMessage)} errorMessage={errorMessage} />
     </ButtonWrapper>
   )
 }

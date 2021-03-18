@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const FormWrapper = styled.form`
-  padding: 25px;
+  padding: 30px 25px;
   display: flex;
   flex-direction: column;
   background-color: #fefefe;

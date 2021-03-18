@@ -7,10 +7,11 @@ interface FormProps{
   submitButtonText: string;
   isSubmitButtonDisabled: boolean;
   showSubmitLoader: boolean;
+  submitErrorMessage?: string;
   onSubmit(): void;
 }
 
-const Form: FunctionComponent<FormProps> = ({children, submitButtonText, onSubmit, showSubmitLoader, isSubmitButtonDisabled}) => {
+const Form: FunctionComponent<FormProps> = ({children, submitButtonText, onSubmit, showSubmitLoader, submitErrorMessage, isSubmitButtonDisabled}) => {
   return (
     <FormWrapper onSubmit={isSubmitButtonDisabled ? (event) => {event.preventDefault()}: (event)=>{event.preventDefault(),onSubmit()}}>
       {children}
@@ -18,6 +19,7 @@ const Form: FunctionComponent<FormProps> = ({children, submitButtonText, onSubmi
         showLoader={showSubmitLoader} 
         isButtonDisabled={isSubmitButtonDisabled} 
         buttonText={submitButtonText}
+        errorMessage={submitErrorMessage}
       />
     </FormWrapper>
   )
