@@ -1,26 +1,19 @@
-import React, { Component, Fragment, FunctionComponent } from 'react';
-import { Dispatch } from 'redux'; 
+import React, { Fragment, FunctionComponent } from 'react';
 import { connect } from 'react-redux';
-
 import Header from '../commons/Header/Header';
 import Form from '../commons/DataForm/Form';
 import InputFormField from '../commons/InputField/InputField';
-
-import { AppState } from '../../data-store/rootReducer';
-import { setUserName, setPassword, toggleSubmitLoader, setLoginError, postLoginData } from './actionCreators';
-
-import { AdminAuthProps, LoginData } from './types';
-import { FORM_FIELDS } from './constants';
 import { AdminAuthWrapper } from './AdminAuthStyled';
+import { AdminAuthProps } from './types';
+import { FORM_FIELDS } from './constants';
+import { mapStateToProps, mapDispatchToProps } from './storeMappers';
 
 
-const AdminAuth:FunctionComponent<AdminAuthProps> = ({username, password, loginError, setUserName, setPassword, isSubmitLoaderVisible, postLoginData}) => {
+const AdminAuth:FunctionComponent<AdminAuthProps> = (props) => {
 
-  const {
-    USERNAME,
-    PASSWORD,
-    SUBMIT
-  } = FORM_FIELDS;
+  const { username, password, loginError, setUserName, setPassword, isSubmitLoaderVisible, postLoginData} = props;
+
+  const { USERNAME, PASSWORD, SUBMIT } = FORM_FIELDS;
 
   const isSubmitButtonDisabled = !USERNAME.validator(username) || !PASSWORD.validator(password) || isSubmitLoaderVisible;
 
@@ -58,31 +51,5 @@ const AdminAuth:FunctionComponent<AdminAuthProps> = ({username, password, loginE
     </Fragment>
   )
 }
-
-const mapStateToProps = ({adminAuthData}: AppState) => ({
-  username: adminAuthData.authData.username,
-  password: adminAuthData.authData.password,
-  loginError: adminAuthData.authData.loginError,
-  isSubmitLoaderVisible: adminAuthData.isSubmitLoaderVisible
-})
-
-const mapDispatchToProps = (dispatch: Dispatch) =>({
-  setUserName(username: string){
-    dispatch(setUserName(username))
-  },
-  setPassword(password: string){
-    dispatch(setPassword(password))
-  },
-  setLoginError(error: string){
-    dispatch(setLoginError(error))
-  },
-  toggleSubmitLoader(loaderState: boolean){
-    dispatch(toggleSubmitLoader(loaderState))
-  },
-  postLoginData(loginData: LoginData){
-    //@ts-ignore
-    dispatch(postLoginData(loginData));
-  }
-})
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminAuth);
