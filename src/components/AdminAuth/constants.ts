@@ -1,8 +1,18 @@
 import { AdminAuthState } from './types';
 
+export const DEFAULT_AUTH_DATA = {
+    username: '',
+    password: ''
+}
+
+export const DEFAULT_LOADER_STATE = false
+
 export const DEFAULT_ADMIN_AUTH_STATE: AdminAuthState = {
-  username: '',
-  password: ''
+  authData: {
+    username: '',
+    password: ''
+  },
+  isSubmitLoaderVisible: false
 }
 
 
