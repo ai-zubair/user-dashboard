@@ -39,6 +39,8 @@ class AdminAuth extends Component<AdminAuthProps> {
                 fieldLabel={USERNAME.label} 
                 fieldType={"text"}
                 fieldValue={username} 
+                errorMessage={USERNAME.errorMessage}
+                validator={USERNAME.validator}
                 onFieldChange={setUserName} 
               />
               <InputFormField 
@@ -46,6 +48,8 @@ class AdminAuth extends Component<AdminAuthProps> {
                 fieldLabel={PASSWORD.label} 
                 fieldType={"password"}
                 fieldValue={password} 
+                errorMessage={PASSWORD.errorMessage}
+                validator={PASSWORD.validator}
                 onFieldChange={setPassword} 
               />
             </Form>
