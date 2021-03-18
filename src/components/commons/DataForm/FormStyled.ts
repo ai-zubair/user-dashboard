@@ -8,6 +8,7 @@ export const FormWrapper = styled.form`
   & > *{
     margin-bottom: 30px;
     &:nth-last-child(1){
+      margin-top: 20px;
       margin-bottom: 0px;
     }
   }

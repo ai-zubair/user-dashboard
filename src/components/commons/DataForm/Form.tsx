@@ -9,7 +9,7 @@ interface FormProps{
 
 const Form: FunctionComponent<FormProps> = ({children, isSubmitButtonDisabled}) => {
   return (
-    <FormWrapper>
+    <FormWrapper onSubmit={isSubmitButtonDisabled ? (event) => {event.preventDefault()}: (event)=>{event.preventDefault()}}>
       {children}
       <Button isButtonDisabled={isSubmitButtonDisabled} buttonText="Login"/>
     </FormWrapper>

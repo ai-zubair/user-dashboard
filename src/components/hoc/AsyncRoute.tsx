@@ -12,7 +12,7 @@ export interface ComponentProps{
 }
 
 interface AsyncRouteProps{
-  componentLoader(): Promise<ComponentModule>;
+  componentLoader(): Promise<any>;
   componentProps: ComponentProps;
   [key: string]: any;
 }
