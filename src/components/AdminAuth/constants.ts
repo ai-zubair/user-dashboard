@@ -5,3 +5,14 @@ export const DEFAULT_ADMIN_AUTH_STATE: AdminAuthState = {
   password: ''
 }
 
+
+export const FORM_FIELDS = {
+  USERNAME: {
+    id: "USER_NAME",
+    label: 'Username'
+  },
+  PASSWORD: {
+    id: "PASS_WORD",
+    label: 'Password'
+  }
+}

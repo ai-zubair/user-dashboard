@@ -1,12 +1,17 @@
-import React, { Component, Dispatch, Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
+import { Dispatch } from 'redux'; 
 import { connect } from 'react-redux';
-import { setUserName, setPassword } from './actionCreators';
-import { AdminAuthProps, AdminAuthState } from './types';
+
 import Header from '../commons/Header/Header';
-import { AdminAuthWrapper } from './AdminAuthStyled';
 import Form from '../commons/DataForm/Form';
 import InputFormField from '../commons/InputField/InputField';
+
 import { AppState } from '../../data-store/rootReducer';
+import { setUserName, setPassword } from './actionCreators';
+
+import { AdminAuthProps } from './types';
+import { FORM_FIELDS } from './constants';
+import { AdminAuthWrapper } from './AdminAuthStyled';
 
 
 class AdminAuth extends Component<AdminAuthProps> {
@@ -19,21 +24,26 @@ class AdminAuth extends Component<AdminAuthProps> {
       setPassword
     } = this.props;
 
+    const {
+      USERNAME,
+      PASSWORD
+    } = FORM_FIELDS;
+
     return (
       <Fragment>
         <Header />
           <AdminAuthWrapper>
             <Form>
               <InputFormField 
-                fieldLabel={'Username'} 
-                fieldID={'user-name'} 
+                fieldID={USERNAME.id} 
+                fieldLabel={USERNAME.label} 
                 fieldType={"text"}
                 fieldValue={username} 
                 onFieldChange={setUserName} 
               />
               <InputFormField 
-                fieldLabel={'Password'} 
-                fieldID={'password'} 
+                fieldID={PASSWORD.id} 
+                fieldLabel={PASSWORD.label} 
                 fieldType={"password"}
                 fieldValue={password} 
                 onFieldChange={setPassword} 
@@ -50,7 +60,7 @@ const mapStateToProps = ({adminAuthData}: AppState) => ({
   password: adminAuthData.password
 })
 
-const mapDispatchToProps = (dispatch: Dispatch<{type: string;payload: string}>) =>({
+const mapDispatchToProps = (dispatch: Dispatch) =>({
   setUserName(username: string){
     dispatch(setUserName(username))
   },
