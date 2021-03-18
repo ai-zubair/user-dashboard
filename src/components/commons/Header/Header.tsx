@@ -5,13 +5,13 @@ interface HeaderProps{
   children?: ReactChild;
 }
 
+
 const Header = ({children}: HeaderProps): ReactElement => {
   return (
-    <div>
-      <HeaderWrapper>
-        {children}
-      </HeaderWrapper>
-    </div>
+    <HeaderWrapper>
+      <p className="app-label">User Dashboard</p>
+      {children}
+    </HeaderWrapper>
   )
 }
 

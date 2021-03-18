@@ -10,4 +10,9 @@ export const HeaderWrapper = styled.div`
   justify-content: space-between;
   color: #fff;
   background-color: #3f51b5;
+  .app-label{
+    font-size: 22px;
+    margin: 0px;
+    font-weight: lighter;
+  }
 `;
