@@ -1,6 +1,7 @@
-import { ActionCreator } from 'redux';
+import axios, { AxiosResponse } from 'axios';
+import { ActionCreator, Dispatch } from 'redux';
 import { ADMIN_AUTH_ACTIONS } from './actions';
-import { TextInputFieldAction, ToggleSubmitLoaderAction } from './types';
+import { LoginData, TextInputFieldAction, ToggleSubmitLoaderAction } from './types';
 
 export const setUserName: ActionCreator<TextInputFieldAction> = (username: string) => ({
   type: ADMIN_AUTH_ACTIONS.SET_USER_NAME,
@@ -21,3 +22,20 @@ export const toggleSubmitLoader: ActionCreator<ToggleSubmitLoaderAction> = (load
   type: ADMIN_AUTH_ACTIONS.TOGGLE_SUBMIT_LOADER,
   payload: loaderState
 })
+
+export const postLoginData = (loginData: LoginData) => {
+  return (dispatch: Dispatch) => {
+    dispatch(toggleSubmitLoader(true));
+    dispatch(setLoginError(''));
+    axios.post('https://reqres.in/api/login',{
+      email: loginData.username,
+      password: loginData.password
+    }).then((response: AxiosResponse)=>{
+      console.log(response);
+      dispatch(toggleSubmitLoader(false))
+    }).catch((error: any)=>{
+      dispatch(toggleSubmitLoader(false));
+      dispatch(setLoginError('Invalid email/password'))
+    });
+  }
+}

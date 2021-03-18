@@ -18,6 +18,7 @@ export interface AdminAuthProps{
   setPassword(password: string): void;
   setLoginError(error: string): void;
   toggleSubmitLoader(loaderState: boolean): void;
+  postLoginData(loginData: LoginData): void;
 }
 
 export interface TextInputFieldAction {
@@ -28,4 +29,9 @@ export interface TextInputFieldAction {
 export interface ToggleSubmitLoaderAction{
   type: string;
   payload: boolean;
+}
+
+export interface LoginData{
+  username: string;
+  password: string;
 }

@@ -1,29 +1,22 @@
 import React, { Component, Fragment } from 'react';
 import { Dispatch } from 'redux'; 
 import { connect } from 'react-redux';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 import Header from '../commons/Header/Header';
 import Form from '../commons/DataForm/Form';
 import InputFormField from '../commons/InputField/InputField';
 
 import { AppState } from '../../data-store/rootReducer';
-import { setUserName, setPassword, toggleSubmitLoader, setLoginError } from './actionCreators';
+import { setUserName, setPassword, toggleSubmitLoader, setLoginError, postLoginData } from './actionCreators';
 
-import { AdminAuthProps } from './types';
+import { AdminAuthProps, LoginData } from './types';
 import { FORM_FIELDS } from './constants';
 import { AdminAuthWrapper } from './AdminAuthStyled';
 
 
 class AdminAuth extends Component<AdminAuthProps> {
 
-  onAuthFormSubmit = () => {
-    this.props.toggleSubmitLoader(true);
-    axios.post('https://reqres.in/api/login',{
-      email: this.props.username,
-      password: this.props.password
-    }).then( response => {console.log(response), this.props.toggleSubmitLoader(false);}).catch( err => {this.props.toggleSubmitLoader(false);this.props.setLoginError('Invalid Email/Password')});
-  }
 
   render() {
     const {
@@ -33,6 +26,7 @@ class AdminAuth extends Component<AdminAuthProps> {
       setUserName,
       setPassword,
       isSubmitLoaderVisible,
+      postLoginData
     } = this.props;
 
     const {
@@ -47,7 +41,7 @@ class AdminAuth extends Component<AdminAuthProps> {
         <Header />
           <AdminAuthWrapper>
             <Form 
-              onSubmit={this.onAuthFormSubmit} 
+              onSubmit={()=>{postLoginData({username,password})}} 
               showSubmitLoader={isSubmitLoaderVisible} 
               submitButtonText={"Login"}
               submitErrorMessage={loginError}
@@ -97,6 +91,10 @@ const mapDispatchToProps = (dispatch: Dispatch) =>({
   },
   toggleSubmitLoader(loaderState: boolean){
     dispatch(toggleSubmitLoader(loaderState))
+  },
+  postLoginData(loginData: LoginData){
+    //@ts-ignore
+    dispatch(postLoginData(loginData));
   }
 })
 
