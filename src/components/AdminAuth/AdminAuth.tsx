@@ -1,12 +1,20 @@
-import React, { Component } from 'react'
-import Header from '../commons/Header/Header'
+import React, { Component, Fragment } from 'react';
+import Header from '../commons/Header/Header';
+import { AdminAuthWrapper } from './AdminAuthStyled';
+import Form from '../commons/DataForm/Form';
+import InputFormField from '../commons/InputField/InputField';
 class AdminAuth extends Component {
   render() {
     return (
-      <div>
+      <Fragment>
         <Header />
-        <h1>this is the admin auth component</h1>
-      </div>
+          <AdminAuthWrapper>
+            <Form>
+              <InputFormField fieldLabel={'Username'} fieldID={'user-name'} fieldType={"text"}/>
+              <InputFormField fieldLabel={'Password'} fieldID={'password'} fieldType={"password"}/>
+            </Form>
+          </AdminAuthWrapper>
+      </Fragment>
     )
   }
 }
