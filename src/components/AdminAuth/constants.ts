@@ -21,5 +21,9 @@ export const FORM_FIELDS = {
     label: 'Password',
     errorMessage: 'Invalid Password',
     validator: (password: string): boolean => password.length >= 6
+  },
+  SUBMIT: {
+    id: "SUBMIT",
+    label: "Login"
   }
 }
