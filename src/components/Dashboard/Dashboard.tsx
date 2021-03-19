@@ -6,21 +6,38 @@ import InputField from '../commons/InputField/InputField';
 import { DashboardWrapper, SearchBarWrapper, AddUserButtonWrapper } from './DashboardStyled';
 import { AppState } from '../../data-store/rootReducer';
 import { Dispatch } from 'redux';
-import { setSearchTerm } from './actionCreators';
+import { setSearchTerm, getUserData } from './actionCreators';
 import { connect } from 'react-redux';
 import { DashboardProps } from './types';
+import { Spinner } from '../commons/Spinner';
 
 class Dashboard extends Component<DashboardProps> {
 
   componentDidMount(){
-    axios.get('https://reqres.in/api/users').then((response: AxiosResponse) => console.log(response))
+    this.props.getUserData();
   }
 
   render() {
     const {
       searchTerm,
-      setSearchTerm
+      userData,
+      setSearchTerm,
+      isDataLoaderVisible
     } = this.props;
+    console.log("User Data has arrived", userData);
+
+    const Users = userData.map( (user) => {
+      return(
+        <div>
+          <span>{user.first_name}</span>
+          <span>{user.last_name}</span>
+          <span>{user.email}</span>
+          <span>{user.id}</span>
+        </div>
+
+      )
+    } )
+
     return (
       <Fragment>
         <Header>
@@ -41,7 +58,7 @@ class Dashboard extends Component<DashboardProps> {
           </AddUserButtonWrapper>
         </Header>
         <DashboardWrapper>
-
+          {isDataLoaderVisible ? <Spinner /> : Users}
         </DashboardWrapper>
       </Fragment>
     )
@@ -50,12 +67,17 @@ class Dashboard extends Component<DashboardProps> {
 
 const mapStateToProps = ({dashboardData}: AppState) => ({
   searchTerm: dashboardData.searchTerm,
-  userData: dashboardData.userData
+  userData: dashboardData.userData,
+  isDataLoaderVisible: dashboardData.isDataLoaderVisible
 });
 
-const mapDispatchToProps = (dipatch: Dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   setSearchTerm(searchTerm: string){
-    dipatch(setSearchTerm(searchTerm))
+    dispatch(setSearchTerm(searchTerm))
+  },
+  getUserData(){
+    //@ts-ignore
+    dispatch(getUserData())
   }
 });
 
