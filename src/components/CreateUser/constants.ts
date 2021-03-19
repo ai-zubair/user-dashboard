@@ -3,13 +3,13 @@ export const FORM_FIELDS = {
     id: "FIRST_NAME",
     label: 'First Name',
     errorMessage: 'Invalid First Name',
-    validator: (firstName: string): boolean => firstName.length >= 2
+    validator: (firstName: string): boolean => firstName.length >= 3
   },
   LAST_NAME:{
     id: "LAST_NAME",
     label: 'Last Name',
     errorMessage: 'Invalid Last Name',
-    validator: (firstName: string): boolean => firstName.length >= 2
+    validator: (firstName: string): boolean => firstName.length >= 3
   },
   USERNAME: {
     id: "USER_NAME",
