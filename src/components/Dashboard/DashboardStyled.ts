@@ -35,13 +35,6 @@ export const DashboardWrapper = styled.div<DashboardWrapperProps>`
   }
 `;
 
-export const SearchBarWrapper = styled.div`
-  width: 500px;
-  input{
-    border: none;
-  }
-`;
-
 export const AddUserButtonWrapper = styled.div`
   button{
     width: 150px;
