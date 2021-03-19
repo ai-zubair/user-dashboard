@@ -18,6 +18,10 @@ class App extends Component {
             path="/dashboard"
             component={(props: ComponentProps) => <AsyncRoute componentLoader={ModuleLoaders.dashboardLoader} componentProps={props} />}
           />
+          <Route 
+            path="/create-user"
+            component={(props: ComponentProps) => <AsyncRoute componentLoader={ModuleLoaders.createUserLoader} componentProps={props} />}
+          />
         </Switch>
       </Provider>
     )
