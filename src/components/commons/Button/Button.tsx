@@ -6,9 +6,10 @@ import { Error } from '../InputField/InputField'
 interface ButtonProps{
   children?: ReactChild[];
   buttonText?: string;
-  isButtonDisabled?: boolean; 
+  isButtonDisabled?: boolean;
   showLoader?: boolean;
   errorMessage?: string;
+  onButtonClick?:()=> void; 
 }
 
 const Button: FunctionComponent<ButtonProps> = ({buttonText, isButtonDisabled = false, showLoader = false, errorMessage = '', children}) => {
