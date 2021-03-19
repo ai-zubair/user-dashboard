@@ -39,7 +39,9 @@ namespace Utils{
 class Dashboard extends Component<DashboardProps> {
 
   componentDidMount(){
-    this.props.getUserData();
+    if(!(Object.values(this.props.userData).length > 1)){
+      this.props.getUserData();
+    }
   }
 
   render() {

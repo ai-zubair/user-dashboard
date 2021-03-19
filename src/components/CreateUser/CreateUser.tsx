@@ -41,7 +41,7 @@ const CreateUser: FunctionComponent<CreateUserProps> = (props) => {
 
   if(isUserModified){
     Promise.resolve(true).then(()=>toggleUserModified(false));
-    return <Redirect to="/dashboard" push />
+    return <Redirect to="/dashboard" push />;
   }
 
   return (
