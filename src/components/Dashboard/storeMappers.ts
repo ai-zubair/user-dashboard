@@ -1,10 +1,11 @@
 import { Dispatch } from 'redux';
 import { AppState } from '../../data-store/rootReducer';
 import { setSearchTerm, getUserData } from './actionCreators';
+import { User } from './types';
 
 const mapStateToProps = ({dashboardData}: AppState) => ({
   searchTerm: dashboardData.searchTerm,
-  userData: dashboardData.userData,
+  userData: Object.values(dashboardData.userData) as User[],
   isDataLoaderVisible: dashboardData.isDataLoaderVisible
 });
 
