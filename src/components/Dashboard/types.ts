@@ -32,7 +32,7 @@ export interface DashboardState{
 
 export interface DashboardProps{
   searchTerm: string;
-  userData: User[];
+  userData: UserCollection;
   isDataLoaderVisible: boolean;
   setSearchTerm(searchTerm: string): void;
   getUserData(): void;

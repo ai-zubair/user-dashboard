@@ -5,6 +5,7 @@ import { TableWrapper, TableHeaderWrapper, TableBodyWrapper, TableRowWrapper, Ta
 interface TableProps {
   tableHeader: ReactChild[];
   tableBody: ReactChild[][];
+  tupleKeys: string[];
   showDataLoader?: boolean;
 }
 
@@ -24,6 +25,7 @@ interface TableRowProps {
 interface TableBodyProps {
   bodyData: ReactChild[][];
   showDataLoader: boolean;
+  rowKeys: string[];
   spanningWidth?: number;
 }
 
@@ -41,10 +43,18 @@ const TableRow: FunctionComponent<TableRowProps> = ({children, isSpannedFullWidt
   if(isHidden){
     return null;
   }
-  const TableDataList = children.map(child => <TableData 
-                                                isSpannedFullWidth={isSpannedFullWidth} 
-                                                spanningWidth={spanningWidth}>{child}
-                                              </TableData>);
+
+  const TableDataList = children.map(
+    (child, index) =>  
+      <TableData
+        key={index}
+        isSpannedFullWidth={isSpannedFullWidth} 
+        spanningWidth={spanningWidth}
+      >
+        {child}
+      </TableData>
+  );
+
   return(
     <TableRowWrapper>
       {TableDataList}
@@ -52,8 +62,13 @@ const TableRow: FunctionComponent<TableRowProps> = ({children, isSpannedFullWidt
   )
 }
 
-const TableBody: FunctionComponent<TableBodyProps> = ({bodyData, showDataLoader, spanningWidth}) => {
-  const TableRowList = bodyData.map( rowData => <TableRow>{rowData}</TableRow> );
+const TableBody: FunctionComponent<TableBodyProps> = ({bodyData, rowKeys,showDataLoader, spanningWidth}) => {
+  const TableRowList = bodyData.map( 
+    (rowData, index) => 
+      <TableRow key={rowKeys[index]}>
+        {rowData}
+      </TableRow> 
+  );
   return (
     <TableBodyWrapper>
       <TableRow isHidden={!showDataLoader} isSpannedFullWidth={showDataLoader} spanningWidth={spanningWidth}>
@@ -69,13 +84,13 @@ const TableBody: FunctionComponent<TableBodyProps> = ({bodyData, showDataLoader,
 }
 
 
-const Table: FunctionComponent<TableProps> = ({tableHeader, tableBody, showDataLoader = false}) => {
+const Table: FunctionComponent<TableProps> = ({tableHeader, tableBody, tupleKeys, showDataLoader = false}) => {
   return (
     <TableWrapper>
       <TableHeaderWrapper>
         <TableRow>{tableHeader}</TableRow>
       </TableHeaderWrapper>
-      <TableBody bodyData={tableBody} showDataLoader={showDataLoader} spanningWidth={tableHeader.length}/>
+      <TableBody rowKeys={tupleKeys} bodyData={tableBody} showDataLoader={showDataLoader} spanningWidth={tableHeader.length}/>
     </TableWrapper>
   )
 }
