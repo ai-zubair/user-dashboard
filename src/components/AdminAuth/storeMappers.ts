@@ -8,6 +8,7 @@ const mapStateToProps = ({adminAuthData}: AppState) => ({
   username: adminAuthData.authData.username,
   password: adminAuthData.authData.password,
   loginError: adminAuthData.authData.loginError,
+  loginToken: adminAuthData.authData.loginToken,
   isSubmitLoaderVisible: adminAuthData.isSubmitLoaderVisible
 })
 

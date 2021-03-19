@@ -1,4 +1,5 @@
 import React, { Fragment, FunctionComponent } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Header from '../commons/Header/Header';
 import Form from '../commons/DataForm/Form';
@@ -9,10 +10,15 @@ import { FORM_FIELDS } from './constants';
 import { mapStateToProps, mapDispatchToProps } from './storeMappers';
 
 
+
 const AdminAuth:FunctionComponent<AdminAuthProps> = (props) => {
-  const { username, password, loginError, setUserName, setPassword, isSubmitLoaderVisible, postLoginData} = props;
+  const { username, password, loginError, loginToken, isSubmitLoaderVisible, setUserName, setPassword, postLoginData} = props;
   const { USERNAME, PASSWORD, SUBMIT } = FORM_FIELDS;
   const isLoginButtonDisabled = !USERNAME.validator(username) || !PASSWORD.validator(password) || isSubmitLoaderVisible;
+
+  if(loginToken){
+    return <Redirect to="/dashboard" push />
+  }
 
   return (
     <Fragment>
@@ -23,7 +29,7 @@ const AdminAuth:FunctionComponent<AdminAuthProps> = (props) => {
           submitErrorMessage={loginError}
           isSubmitButtonDisabled={isLoginButtonDisabled}
           showSubmitLoader={isSubmitLoaderVisible} 
-          onSubmit={()=>{postLoginData({username,password})}} 
+          onSubmit={()=>postLoginData({username,password})} 
         >
           <InputFormField 
             fieldID={USERNAME.id} 

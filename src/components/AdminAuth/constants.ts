@@ -3,10 +3,11 @@ import { AuthDataState } from "./types"
 export const DEFAULT_AUTH_DATA: AuthDataState = {
   username: '',
   password: '',
-  loginError: ''
+  loginError: '',
+  loginToken: ''
 }
 
-export const DEFAULT_LOADER_STATE = false
+export const DEFAULT_LOADER_STATE = false;
 
 
 export const FORM_FIELDS = {

@@ -2,6 +2,7 @@ export interface AuthDataState{
   username: string;
   password: string;
   loginError: string;
+  loginToken: string;
 }
 
 export interface AdminAuthState{
@@ -13,6 +14,7 @@ export interface AdminAuthProps{
   username: string; 
   password: string; 
   loginError: string;
+  loginToken: string;
   isSubmitLoaderVisible: boolean;
   setUserName(username: string): void; 
   setPassword(password: string): void;

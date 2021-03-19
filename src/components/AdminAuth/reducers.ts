@@ -21,6 +21,10 @@ const authDataReducer: Reducer<AuthDataState, TextInputFieldAction> = (authData 
         newAuthData.loginError = payload;
         break;
       }
+    case ADMIN_AUTH_ACTIONS.SET_LOGIN_TOKEN: 
+      {
+        newAuthData.loginToken = payload;
+      }
   }
 
   return Object.assign({}, authData, newAuthData);

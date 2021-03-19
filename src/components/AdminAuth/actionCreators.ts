@@ -18,6 +18,11 @@ export const setLoginError: ActionCreator<TextInputFieldAction> = (error: string
   payload: error
 })
 
+export const setLoginToken: ActionCreator<TextInputFieldAction> = (loginToken: string) =>({
+  type: ADMIN_AUTH_ACTIONS.SET_LOGIN_TOKEN,
+  payload: loginToken
+})
+
 export const toggleSubmitLoader: ActionCreator<ToggleSubmitLoaderAction> = (loaderState: boolean) => ({
   type: ADMIN_AUTH_ACTIONS.TOGGLE_SUBMIT_LOADER,
   payload: loaderState
@@ -32,7 +37,8 @@ export const postLoginData = (loginData: LoginData) => {
       password: loginData.password
     }).then((response: AxiosResponse)=>{
       console.log(response);
-      dispatch(toggleSubmitLoader(false))
+      dispatch(toggleSubmitLoader(false));
+      dispatch(setLoginToken(response.data.token));
     }).catch((error: any)=>{
       dispatch(toggleSubmitLoader(false));
       dispatch(setLoginError('Invalid email/password'))
