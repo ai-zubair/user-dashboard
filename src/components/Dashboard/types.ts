@@ -3,6 +3,10 @@ export interface SearchTermAction{
   payload: string;
 }
 
+export interface DeleteUserAction{
+  type: string;
+  payload: number;
+}
 export interface UserDataAction{
   type: string;
   payload: User[]
@@ -36,4 +40,5 @@ export interface DashboardProps{
   isDataLoaderVisible: boolean;
   setSearchTerm(searchTerm: string): void;
   getUserData(): void;
+  removeUser(userID: number): void;
 }

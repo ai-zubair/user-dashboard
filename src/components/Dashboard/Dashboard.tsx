@@ -24,6 +24,7 @@ interface MapperConfig{
   searchTerm: string;
   actionHandlers: {
     setDialogBoxOpen(dialogBoxState: boolean): void;
+    setActiveUserID(userID: number): void;
   }
 }
 namespace Utils{
@@ -39,7 +40,8 @@ namespace Utils{
     const {
       searchTerm, 
       actionHandlers:{
-        setDialogBoxOpen
+        setDialogBoxOpen,
+        setActiveUserID
       }
     } = mapperConfig;
     const searchFilteredUsers = userData.filter( user => TABLE_CONFIG.USER_CONTAINS_SEARCH_TERM(user, searchTerm));
@@ -58,7 +60,7 @@ namespace Utils{
         />
         <Button 
           buttonText={TABLE_CONFIG.ACTION_BUTTONS_LABELS.DELETE} 
-          onButtonClick={()=>setDialogBoxOpen(true)}
+          onButtonClick={()=>{setDialogBoxOpen(true);setActiveUserID(user.id)}}
         />
       </ActionButtonsWrapper> 
     ])
@@ -67,30 +69,26 @@ namespace Utils{
   }
 }
 
-const OPTION = {
-  optionLabel: "OPTION",
-  optionColor: "green",
-  onOptionClick(){
-    console.log('option clicked')
-  }
-}
 
 const Dashboard: FunctionComponent<DashboardProps> = (props) => {
 
   const [dialogBoxOpen, setDialogBoxOpen] = useState(false);
+  const [activeUserID, setActiveUserID] = useState(0);
 
   const {
     searchTerm,
     userData,
     setSearchTerm,
-    isDataLoaderVisible
+    isDataLoaderVisible,
+    removeUser
   } = props;
 
 
   const mapperConfig = {
     searchTerm, 
     actionHandlers: {
-      setDialogBoxOpen
+      setDialogBoxOpen,
+      setActiveUserID
     }
   }
 
@@ -136,7 +134,7 @@ const Dashboard: FunctionComponent<DashboardProps> = (props) => {
           onOptionOneClick={()=>setDialogBoxOpen(false)}
           optionTwoColor={DIALOG_BOX_CONFIG.DELETE_BUTTON.COLOR}
           optionTwoLabel={DIALOG_BOX_CONFIG.DELETE_BUTTON.LABEL}
-          onOptionTwoClick={()=>setDialogBoxOpen(false)}
+          onOptionTwoClick={()=>removeUser(activeUserID || 0)}
         />
       </DashboardWrapper>
     </Fragment>

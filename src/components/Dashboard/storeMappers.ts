@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { AppState } from '../../data-store/rootReducer';
-import { setSearchTerm, getUserData } from './actionCreators';
+import { setSearchTerm, getUserData, removeUser } from './actionCreators';
 import { User } from './types';
 
 const mapStateToProps = ({dashboardData}: AppState) => ({
@@ -16,6 +16,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   getUserData(){
     //@ts-ignore
     dispatch(getUserData())
+  },
+  removeUser(userID: number){
+    //@ts-ignore
+    dispatch(removeUser(userID))
   }
 });
 
