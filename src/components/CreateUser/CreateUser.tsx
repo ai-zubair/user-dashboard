@@ -6,9 +6,9 @@ import Header from '../commons/Header/Header';
 import InputFormField from '../commons/InputField/InputField';
 import { CreateUserWrapper } from './CreateUserStyled';
 import { FORM_FIELDS } from './constants';
-import { CreateUserProps } from './types';
+import { CreateUserProps, NewUser } from './types';
 import { AppState } from '../../data-store/rootReducer';
-import { addFirstName, addLastName, addUserEmail, addUserPassword } from './actionCreators';
+import { addFirstName, addLastName, addUserEmail, addUserPassword, postNewUserData } from './actionCreators';
 
 const AddUser: FunctionComponent<CreateUserProps> = (props) => {
 
@@ -22,7 +22,8 @@ const AddUser: FunctionComponent<CreateUserProps> = (props) => {
     addFirstName,
     addLastName,
     addPassword,
-    addEmail
+    addEmail,
+    postNewUserData
   } = props;
 
   const {
@@ -44,7 +45,7 @@ const AddUser: FunctionComponent<CreateUserProps> = (props) => {
           submitErrorMessage={signUpError}
           isSubmitButtonDisabled={isSignUpButtonDisabled}
           showSubmitLoader={isSignUpLoaderVisible} 
-          onSubmit={()=>{}} 
+          onSubmit={()=>postNewUserData({firstName, lastName, email, password, signUpError})} 
         >
         <InputFormField 
             fieldID={FIRST_NAME.id} 
@@ -99,17 +100,21 @@ const mapStateToProps = ({createNewUserData}: AppState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   addFirstName(firstName: string){
-    dispatch(addFirstName(firstName))
+    dispatch(addFirstName(firstName));
   },
   addLastName(lastName: string){
-    dispatch(addLastName(lastName))
+    dispatch(addLastName(lastName));
   },
   addPassword(password: string){
-    dispatch(addUserPassword(password))
+    dispatch(addUserPassword(password));
   },
   addEmail(email: string){
-    dispatch(addUserEmail(email))
+    dispatch(addUserEmail(email));
   },
+  postNewUserData(userData: NewUser){
+    // @ts-ignore
+    dispatch(postNewUserData(userData));
+  }
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(AddUser);

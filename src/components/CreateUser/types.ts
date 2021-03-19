@@ -32,5 +32,5 @@ export interface CreateUserProps{
   addLastName(lastName: string): void;
   addPassword(password: string): void;
   addEmail(email: string): void;
-
+  postNewUserData(userData: NewUser): void;
 }
