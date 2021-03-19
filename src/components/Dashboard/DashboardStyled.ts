@@ -36,6 +36,9 @@ export const DashboardWrapper = styled.div<DashboardWrapperProps>`
 `;
 
 export const AddUserButtonWrapper = styled.div`
+  a{
+    text-decoration: none;
+  }
   button{
     width: 150px;
     background-color: var(--secondary-background-color);

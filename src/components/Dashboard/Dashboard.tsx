@@ -1,4 +1,5 @@
 import React, { Component, Fragment, FunctionComponent, ReactChild } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Button from '../commons/Button/Button';
@@ -61,9 +62,11 @@ class Dashboard extends Component<DashboardProps> {
             onSearchtermChange={setSearchTerm}
           />
           <AddUserButtonWrapper>
-            <Button
-              buttonText={ADD_USER_BUTTON_LABEL}
-            />
+            <Link to="/create-user">
+              <Button
+                buttonText={ADD_USER_BUTTON_LABEL}
+              />
+            </Link>
           </AddUserButtonWrapper>
         </Header>
         <DashboardWrapper isDataLoaderVisible={isDataLoaderVisible}>
