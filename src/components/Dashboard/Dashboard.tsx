@@ -1,11 +1,26 @@
 import React, { Component, Fragment } from 'react';
+import axios, { AxiosResponse } from 'axios';
 import Button from '../commons/Button/Button';
 import Header from '../commons/Header/Header';
 import InputField from '../commons/InputField/InputField';
-import { DashboardWrapper, SearchBarWrapper } from './DashboardStyled';
+import { DashboardWrapper, SearchBarWrapper, AddUserButtonWrapper } from './DashboardStyled';
+import { AppState } from '../../data-store/rootReducer';
+import { Dispatch } from 'redux';
+import { setSearchTerm } from './actionCreators';
+import { connect } from 'react-redux';
+import { DashboardProps } from './types';
 
-export default class Landing extends Component {
+class Dashboard extends Component<DashboardProps> {
+
+  componentDidMount(){
+    axios.get('https://reqres.in/api/users').then((response: AxiosResponse) => console.log(response))
+  }
+
   render() {
+    const {
+      searchTerm,
+      setSearchTerm
+    } = this.props;
     return (
       <Fragment>
         <Header>
@@ -14,12 +29,16 @@ export default class Landing extends Component {
               hideLabel={true}
               fieldType="text"
               fieldID="search"
-              fieldValue=""
+              fieldValue={searchTerm}
               fieldPlaceholder="Search for customer names, phone-numbers, emails ..."
-              onFieldChange={(value)=>{console.log(value)}}
+              onFieldChange={setSearchTerm}
             />
           </SearchBarWrapper>
-          <Button />
+          <AddUserButtonWrapper>
+            <Button
+              buttonText="Add User"
+            />
+          </AddUserButtonWrapper>
         </Header>
         <DashboardWrapper>
 
@@ -28,3 +47,16 @@ export default class Landing extends Component {
     )
   }
 }
+
+const mapStateToProps = ({dashboardData}: AppState) => ({
+  searchTerm: dashboardData.searchTerm,
+  userData: dashboardData.userData
+});
+
+const mapDispatchToProps = (dipatch: Dispatch) => ({
+  setSearchTerm(searchTerm: string){
+    dipatch(setSearchTerm(searchTerm))
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

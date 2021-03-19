@@ -8,7 +8,7 @@ export const AdminAuthWrapper = styled.div`
   align-items: center;
   & > *:nth-child(1){
     width: 320px;
-    box-shadow: var(--container-box-shadow);
+    box-shadow: var(--primary-box-shadow);
     border-radius: 2px;
   }
 `;

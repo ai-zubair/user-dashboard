@@ -10,3 +10,12 @@ export const SearchBarWrapper = styled.div`
     border: none;
   }
 `;
+
+export const AddUserButtonWrapper = styled.div`
+  button{
+    width: 150px;
+    background-color: var(--secondary-background-color);
+    border: 2px solid var(--secondary-background-color);
+    box-shadow: var(--secondary-box-shadow);
+  }
+`;
