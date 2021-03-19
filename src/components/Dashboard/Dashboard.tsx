@@ -1,5 +1,5 @@
 import React, { Component, Fragment, FunctionComponent, ReactChild } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Button from '../commons/Button/Button';
@@ -14,11 +14,11 @@ import { SEARCH_BAR_CONFIG, TABLE_CONFIG, ADD_USER_BUTTON_LABEL } from './consta
 import { DashboardProps, User } from './types';
 
 namespace Utils{
-  export const ActionButtons: FunctionComponent<{userData: User}> = ({userData}) => {
+  export const ActionButtons: FunctionComponent<{userID: number}> = ({userID}) => {
     return(
       <ActionButtonsWrapper>
-        <Button buttonText="Edit" onButtonClick={()=>console.log(userData)}/>
-        <Button buttonText="Delete" onButtonClick={()=>console.log(userData)}/>
+        <Route render={({history}) => <Button buttonText="Edit" onButtonClick={()=>history.push(`/edit-user/${userID}`)}/> }/>
+        <Button buttonText="Delete" onButtonClick={()=>console.log(userID)}/>
       </ActionButtonsWrapper>
     );
   } 
@@ -30,7 +30,7 @@ namespace Utils{
       user.last_name,
       user.email,
       <Avatar avatarURL={user.avatar} altText={user.first_name} />,
-      <ActionButtons userData={user}/>
+      <ActionButtons userID={user.id}/>
     ])
     const tupleKeys = filteredUserData.map( user => String(user.id));
     return[mappedUsers, tupleKeys]
