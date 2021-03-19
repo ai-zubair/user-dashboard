@@ -1,4 +1,4 @@
-import { AuthDataState } from "./types"
+import { AuthDataState } from "./types";
 
 export const DEFAULT_AUTH_DATA: AuthDataState = {
   username: '',
@@ -9,6 +9,7 @@ export const DEFAULT_AUTH_DATA: AuthDataState = {
 
 export const DEFAULT_LOADER_STATE = false;
 
+export const AUTH_EROR_MESSAGE =  'Invalid email/password';
 
 export const FORM_FIELDS = {
   USERNAME: {
