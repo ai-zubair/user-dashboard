@@ -3,14 +3,15 @@ import { AppState } from '../../data-store/rootReducer';
 import { addFirstName, addLastName, addUserEmail, addUserPassword, postNewUserData, toggleUserModififed } from './actionCreators';
 import { NewUser } from './types';
 
-const mapStateToProps = ({createNewUserData}: AppState) => ({
+const mapStateToProps = ({createNewUserData, dashboardData}: AppState) => ({
   firstName: createNewUserData.userData.firstName,
   lastName: createNewUserData.userData.lastName,
   email: createNewUserData.userData.email,
   password: createNewUserData.userData.password,
   signUpError: createNewUserData.userData.signUpError,
   isUserModified: createNewUserData.userModified,
-  isSignUpLoaderVisible: createNewUserData.isSignUpLoaderVisible
+  isSignUpLoaderVisible: createNewUserData.isSignUpLoaderVisible,
+  existingUsers: dashboardData.userData 
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

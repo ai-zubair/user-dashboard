@@ -1,3 +1,6 @@
+import { match } from "react-router";
+import { UserCollection } from "../Dashboard/types";
+
 export interface TextFieldAction{
   type: string;
   payload: string;
@@ -23,17 +26,20 @@ export interface CreateNewUserState{
 }
 
 export interface CreateUserProps{
+  match: match<{id?: string}>;
   email: string;
   password: string;
   firstName: string;
   lastName: string;
   signUpError: string;
+  isEditRoute: boolean;
   isUserModified: boolean;
   isSignUpLoaderVisible: boolean;
-  addFirstName(firstName: string): void;
+  existingUsers: UserCollection;
+  addEmail(email: string): void;
   addLastName(lastName: string): void;
   addPassword(password: string): void;
-  addEmail(email: string): void;
-  toggleUserModified(modificationState: boolean): void;
+  addFirstName(firstName: string): void;
   postNewUserData(userData: NewUser): void;
+  toggleUserModified(modificationState: boolean): void;
 }
