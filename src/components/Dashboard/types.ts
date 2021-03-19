@@ -21,9 +21,12 @@ export interface User{
   avatar: string;
 }
 
+export interface UserCollection{
+  [userID: number]: User;
+}
 export interface DashboardState{
   searchTerm: string;
-  userData: User[];
+  userData: UserCollection;
   isDataLoaderVisible: boolean;
 }
 

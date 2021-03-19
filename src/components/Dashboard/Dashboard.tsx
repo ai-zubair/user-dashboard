@@ -1,17 +1,46 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, FunctionComponent, ReactChild } from 'react';
 import Button from '../commons/Button/Button';
 import Header from '../commons/Header/Header';
 import InputField from '../commons/InputField/InputField';
-import { DashboardWrapper, SearchBarWrapper, AddUserButtonWrapper } from './DashboardStyled';
+import { DashboardWrapper, SearchBarWrapper, AddUserButtonWrapper, UserAvatarWrapper, ActionButtonsWrapper } from './DashboardStyled';
 import { AppState } from '../../data-store/rootReducer';
 import { Dispatch } from 'redux';
 import { setSearchTerm, getUserData } from './actionCreators';
 import { connect } from 'react-redux';
-import { DashboardProps } from './types';
-import { Spinner } from '../commons/Spinner';
+import { DashboardProps, User } from './types';
 import Table from '../commons/Table/Table';
 
+
+const UserAvatar: FunctionComponent<{avatarURL: string; altText: string;}> = ({avatarURL, altText}) => {
+  return(
+    <UserAvatarWrapper>
+      <img src={avatarURL} alt={altText} />
+    </UserAvatarWrapper>
+  )
+}
+
+const ActionButtons: FunctionComponent<{userID: number}> = ({userID}) => {
+  return(
+    <ActionButtonsWrapper>
+      <Button buttonText="Edit" onButtonClick={()=>{console.log()}}/>
+      <Button buttonText="Delete" onButtonClick={()=>{}}/>
+    </ActionButtonsWrapper>
+  );
+} 
+
 class Dashboard extends Component<DashboardProps> {
+
+
+  mapUserData = (userData: User[]): ReactChild[][] => {
+
+    return userData.map( user => [
+      user.first_name,
+      user.last_name,
+      user.email,
+      <UserAvatar avatarURL={user.avatar} altText={user.first_name} />,
+      <ActionButtons userID={user.id}/>
+    ])
+  }
 
   componentDidMount(){
     this.props.getUserData();
@@ -25,7 +54,7 @@ class Dashboard extends Component<DashboardProps> {
       isDataLoaderVisible
     } = this.props;
 
-    const mappedUserData = userData.map(user=>[user.first_name, user.last_name, user.email, user.avatar])
+    const mappedUserData = this.mapUserData(userData);
 
     return (
       <Fragment>
@@ -36,7 +65,7 @@ class Dashboard extends Component<DashboardProps> {
               fieldType="text"
               fieldID="search"
               fieldValue={searchTerm}
-              fieldPlaceholder="Search for customer names, phone-numbers, emails ..."
+              fieldPlaceholder="Search for customer names, emails ..."
               onFieldChange={setSearchTerm}
             />
           </SearchBarWrapper>
@@ -48,7 +77,7 @@ class Dashboard extends Component<DashboardProps> {
         </Header>
         <DashboardWrapper>
           <Table 
-            tableHeader={['First Name', 'Last Name', 'Email', 'Avatar']}
+            tableHeader={['First Name', 'Last Name', 'Email', 'Avatar', 'Actions']}
             tableBody={mappedUserData}
             showDataLoader={isDataLoaderVisible}
           />
@@ -60,7 +89,7 @@ class Dashboard extends Component<DashboardProps> {
 
 const mapStateToProps = ({dashboardData}: AppState) => ({
   searchTerm: dashboardData.searchTerm,
-  userData: dashboardData.userData,
+  userData: Object.values(dashboardData.userData),
   isDataLoaderVisible: dashboardData.isDataLoaderVisible
 });
 

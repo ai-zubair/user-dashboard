@@ -1,6 +1,6 @@
 import { Reducer, combineReducers } from 'redux';
 import { DASH_BOARD_ACTIONS } from './actions';
-import { SearchTermAction, UserDataAction, User, ToggleDataLoaderAction } from './types';
+import { SearchTermAction, UserDataAction, User, ToggleDataLoaderAction, UserCollection } from './types';
 
 const searchTermReducer: Reducer<string, SearchTermAction> = (searchTerm = '', {type, payload}) => {
   let newSearchTerm = searchTerm;
@@ -13,17 +13,19 @@ const searchTermReducer: Reducer<string, SearchTermAction> = (searchTerm = '', {
   return newSearchTerm;
 }
 
-const DEFAULT_USER_DATA: User[] = []
+const DEFAULT_USER_DATA: UserCollection = {}
 
-export const userDataReducer: Reducer<User[], UserDataAction> = (userData = DEFAULT_USER_DATA, {type, payload}) => {
-  let newUserData = [...userData];
+export const userDataReducer: Reducer<UserCollection, UserDataAction> = (userDataCollection = DEFAULT_USER_DATA, {type, payload}) => {
+  let newUserData = userDataCollection;
   switch(type){
     case DASH_BOARD_ACTIONS.SET_CUSTOMER_DATA:
       {
-        newUserData = payload
+        for(const user of payload){
+          newUserData[user.id] = user
+        }
       }
   }
-  return newUserData;
+  return Object.assign({}, userDataCollection, newUserData);
 }
 
 export const toggleDataLoaderReducer: Reducer<boolean, ToggleDataLoaderAction> = (dataLoaderState = false, {type, payload}) =>{

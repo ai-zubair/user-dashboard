@@ -14,7 +14,7 @@ export const DashboardWrapper = styled.div`
           width: 200px;
         }
         &:nth-child(3){
-          width: 300px;
+          width: 400px;
         }
         &:nth-child(4){
           width: 100px;
@@ -44,5 +44,23 @@ export const AddUserButtonWrapper = styled.div`
     background-color: var(--secondary-background-color);
     border: 2px solid var(--secondary-background-color);
     box-shadow: var(--secondary-box-shadow);
+  }
+`;
+
+export const UserAvatarWrapper = styled.div`
+  img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+  }
+`;
+export const ActionButtonsWrapper = styled.div`
+  padding: 0px 120px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  button{
+    width: 100px;
+    height: 35px;
   }
 `;
