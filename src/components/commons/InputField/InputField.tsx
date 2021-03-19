@@ -2,12 +2,14 @@ import React, { ChangeEvent, FunctionComponent, useState } from 'react';
 import { InputFieldWrapper, ErrorWrapper } from './InputFieldStyled';
 
 interface InputFieldProps{
-  fieldLabel: string;
+  fieldLabel?: string;
   fieldID: string;
   fieldType: InputFieldType;
   fieldValue: string;
-  errorMessage: string;
-  validator: (fieldValue: string)=> boolean;
+  fieldPlaceholder?: string;
+  errorMessage?: string;
+  hideLabel?: boolean;
+  validator?: (fieldValue: string)=> boolean;
   onFieldChange:(changedValue: string)=>void;
 }
 
@@ -21,18 +23,20 @@ export const Error = ({isHidden, errorMessage}:{errorMessage: string; isHidden: 
   )
 }
 
-const InputField: FunctionComponent<InputFieldProps> = ({fieldLabel, fieldID, fieldType, fieldValue, errorMessage, validator, onFieldChange}) => {
+const InputField: FunctionComponent<InputFieldProps> = (props) => {
   const [errorHidden, toggleErrorHidden] = useState(true);
+  const {fieldLabel, fieldID, fieldType, fieldValue, fieldPlaceholder, hideLabel, errorMessage = '', validator, onFieldChange} = props;
 
   return (
     <InputFieldWrapper>
-      <label htmlFor={fieldID}>{fieldLabel}</label>
+      {hideLabel ? null : <label htmlFor={fieldID}>{fieldLabel}</label> }
       <input 
         id={fieldID} 
         type={fieldType} 
+        placeholder={fieldPlaceholder}
         value={fieldValue} 
-        onChange={(event: ChangeEvent<HTMLInputElement>) => {toggleErrorHidden(validator(event.target.value)),onFieldChange(event.target.value)}}
-        onBlur={(event) => toggleErrorHidden(validator(event.target.value))}
+        onChange={(event: ChangeEvent<HTMLInputElement>) => {toggleErrorHidden(validator ? validator(event.target.value): false),onFieldChange(event.target.value)}}
+        onBlur={(event) => toggleErrorHidden(validator ? validator(event.target.value): false)}
       />
       <Error isHidden={errorHidden} errorMessage={errorMessage} />
     </InputFieldWrapper>
