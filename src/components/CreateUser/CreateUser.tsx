@@ -1,17 +1,14 @@
 import React, { Fragment, Component} from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Redirect, useParams } from 'react-router';
-
+import { Redirect } from 'react-router';
 import Form from '../commons/DataForm/Form';
 import Header from '../commons/Header/Header';
 import Button from '../commons/Button/Button';
 import InputFormField from '../commons/InputField/InputField';
 import { CreateUserWrapper } from './CreateUserStyled';
 import { AddUserButtonWrapper } from '../Dashboard/DashboardStyled';
-
 import { mapStateToProps, mapDispatchToProps } from './storeMappers';
-
 import { CreateUserProps } from './types';
 import { FORM_FIELDS, BACK_BUTTON_LABEL } from './constants';
 import { User } from '../Dashboard/types';
@@ -19,16 +16,18 @@ import { User } from '../Dashboard/types';
 class CreateUser extends Component<CreateUserProps>{
 
   populateState = (existingUser: User) => {
-    this.props.addFirstName(existingUser.first_name);
-    this.props.addLastName(existingUser.last_name);
-    this.props.addEmail(existingUser.email);
+    const { addFirstName, addLastName, addEmail} = this.props;
+    addFirstName(existingUser.first_name);
+    addLastName(existingUser.last_name);
+    addEmail(existingUser.email);
   }
 
   flushState = () => {
-    this.props.addFirstName('');
-    this.props.addLastName('');
-    this.props.addEmail('');
-    this.props.addPassword('');
+    const {addFirstName, addLastName, addEmail, addPassword} = this.props;
+    addFirstName('');
+    addLastName('');
+    addEmail('');
+    addPassword('');
   }
 
   componentWillUnmount(){
