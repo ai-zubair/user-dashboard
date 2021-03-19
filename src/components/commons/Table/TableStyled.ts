@@ -1,43 +1,33 @@
 import styled from "styled-components";
 
-export interface TableDataWrapperProps{
-  isSpannedFullWidth?: boolean;
-}
-
 export const TableWrapper = styled.table`
-  thead{
-    tr{
-      background-color: var(--primary-background-color);
-      color: white;
-      height: 50px;
-    }
-  }
-  tbody{
-    tr{
-      border-bottom: 1px solid #838383;
-      &:nth-last-child(1){
-        border-bottom: none;
-      }
-      height: 70px;
-    }
-  }
-  td{
-    padding: 10px;
-  }
 
 `;
 
 export const TableHeaderWrapper = styled.thead`
+  tr{
+    background-color: var(--primary-background-color);
+    color: white;
+    height: 50px;
+  }
 `;
 
 export const TableBodyWrapper = styled.tbody`
+  tr{
+    border-bottom: 1px solid #838383;
+    &:nth-last-child(1){
+      border-bottom: none;
+    }
+    height: 70px;
+  }
 `;
 
 export const TableRowWrapper = styled.tr`
   text-align: center;
 `;
 
-export const TableDataWrapper = styled.td<TableDataWrapperProps>`
+export const TableDataWrapper = styled.td`
+  padding: 10px;
 `;
 
 export const SpinnerWrapper = styled.div`
