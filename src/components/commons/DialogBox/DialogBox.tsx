@@ -21,30 +21,39 @@ Modal.defaultStyles.content = {
   inset: '0px',
   padding: '60px 40px'
 }
-interface DialogBoxOption{
-  optionLabel: string;
-  optionColor: string;
-  onOptionClick(): void;
-}
 interface DialogBoxProps{
   isDialogBoxShown: boolean;
   dialogLabel: string;
-  options: [DialogBoxOption, DialogBoxOption]
+  optionOneLabel: string;
+  optionOneColor: string;
+  optionTwoLabel: string;
+  optionTwoColor: string;
+  onOptionOneClick(): void;
+  onOptionTwoClick(): void;
 }
 
 
 const DialogBox: FunctionComponent<DialogBoxProps> = (props) => {
-  const { isDialogBoxShown, dialogLabel, options } = props;
-  const [ optionOne, optionTwo ] = options;
+  const { 
+    isDialogBoxShown, 
+    dialogLabel, 
+    optionOneLabel, 
+    optionOneColor, 
+    optionTwoLabel, 
+    optionTwoColor, 
+    onOptionOneClick, 
+    onOptionTwoClick 
+  } = props;
+
   return (
     <Modal isOpen={isDialogBoxShown}>
       <DialogBoxContentWrapper>
         <DialogBoxLabelWrapper>
           {dialogLabel}
         </DialogBoxLabelWrapper>
-        <DialogBoxOptionsWrapper optionOneColor={optionOne.optionColor} optionTwoColor={optionTwo.optionColor}>
-          <Button buttonText={optionOne.optionLabel} onButtonClick={optionOne.onOptionClick}/>
-          <Button buttonText={optionTwo.optionLabel} onButtonClick={optionTwo.onOptionClick}/>
+        <DialogBoxOptionsWrapper optionOneColor={optionOneColor} optionTwoColor={optionTwoColor}>
+          <Button buttonText={optionOneLabel} onButtonClick={onOptionOneClick}/>
+          <Button buttonText={optionTwoLabel} onButtonClick={onOptionTwoClick}/>
         </DialogBoxOptionsWrapper>
       </DialogBoxContentWrapper>
     </Modal>
