@@ -50,7 +50,8 @@ class CreateUser extends Component<CreateUserProps>{
       addEmail,
       isUserModified,
       toggleUserModified,
-      postNewUserData
+      postNewUserData,
+      updateUserData
     } = this.props;
   
     const {
@@ -64,6 +65,13 @@ class CreateUser extends Component<CreateUserProps>{
     const id = this.props?.match?.params?.id;
     const existingUser = this.props.existingUsers[Number(id)];
     const needToPopulateState = isEditRoute && (!email || existingUser.email !== email);
+    const submitButtonHandler = isEditRoute && id &&existingUser ? () => updateUserData({firstName,lastName,email,password,signUpError},id) : () => postNewUserData({firstName,lastName,email,password,signUpError});
+    const isSignUpButtonDisabled =  !FIRST_NAME.validator(firstName) || 
+                                    !LAST_NAME.validator(lastName) || 
+                                    !USERNAME.validator(email) || 
+                                    (isEditRoute ? false : !PASSWORD.validator(password)) || 
+                                    isSignUpLoaderVisible;
+
   
     if(isEditRoute && !existingUser){
       return <Redirect to="/dashboard" push />
@@ -73,11 +81,6 @@ class CreateUser extends Component<CreateUserProps>{
       this.populateState(existingUser);
     }
   
-    const isSignUpButtonDisabled =  !FIRST_NAME.validator(firstName) || 
-                                    !LAST_NAME.validator(lastName) || 
-                                    !USERNAME.validator(email) || 
-                                    (isEditRoute ? false : !PASSWORD.validator(password)) || 
-                                    isSignUpLoaderVisible;
   
     if(isUserModified){
       Promise.resolve(true).then(()=>toggleUserModified(false));
@@ -101,7 +104,7 @@ class CreateUser extends Component<CreateUserProps>{
             submitErrorMessage={signUpError}
             isSubmitButtonDisabled={isSignUpButtonDisabled}
             showSubmitLoader={isSignUpLoaderVisible} 
-            onSubmit={()=>postNewUserData({firstName, lastName, email, password, signUpError})} 
+            onSubmit={submitButtonHandler} 
           >
           <InputFormField 
               fieldID={FIRST_NAME.id} 
