@@ -19,11 +19,11 @@ const UserAvatar: FunctionComponent<{avatarURL: string; altText: string;}> = ({a
   )
 }
 
-const ActionButtons: FunctionComponent<{userID: number}> = ({userID}) => {
+const ActionButtons: FunctionComponent<{userID: number; userData: User}> = ({userID, userData}) => {
   return(
     <ActionButtonsWrapper>
-      <Button buttonText="Edit" onButtonClick={()=>{console.log()}}/>
-      <Button buttonText="Delete" onButtonClick={()=>{}}/>
+      <Button buttonText="Edit" onButtonClick={()=>console.log(userData)}/>
+      <Button buttonText="Delete" onButtonClick={()=>console.log(userData)}/>
     </ActionButtonsWrapper>
   );
 } 
@@ -31,15 +31,21 @@ const ActionButtons: FunctionComponent<{userID: number}> = ({userID}) => {
 class Dashboard extends Component<DashboardProps> {
 
 
-  mapUserData = (userData: User[]): ReactChild[][] => {
+  getTupleKeys = (userData: User[]): string[] => {
+    return userData.map( user => String(user.id))
+  }
 
-    return userData.map( user => [
+  mapUserDataToTableTuples = (userData: User[], searchTerm: string): [ReactChild[][], string[]] => {
+    const filteredUserData = userData.filter( user => user.first_name.includes(searchTerm) || user.last_name.includes(searchTerm) || user.email.includes(searchTerm))
+    const mappedUsers = filteredUserData.map( user => [
       user.first_name,
       user.last_name,
       user.email,
       <UserAvatar avatarURL={user.avatar} altText={user.first_name} />,
-      <ActionButtons userID={user.id}/>
+      <ActionButtons userID={user.id} userData={this.props.userData[user.id]}/>
     ])
+    const tupleKeys = filteredUserData.map( user => String(user.id));
+    return[mappedUsers, tupleKeys]
   }
 
   componentDidMount(){
@@ -54,7 +60,7 @@ class Dashboard extends Component<DashboardProps> {
       isDataLoaderVisible
     } = this.props;
 
-    const mappedUserData = this.mapUserData(userData);
+    const [mappedUsers, tupleKeys] = this.mapUserDataToTableTuples(Object.values(userData), searchTerm);
 
     return (
       <Fragment>
@@ -75,10 +81,11 @@ class Dashboard extends Component<DashboardProps> {
             />
           </AddUserButtonWrapper>
         </Header>
-        <DashboardWrapper>
+        <DashboardWrapper isDataLoaderVisible={isDataLoaderVisible}>
           <Table 
             tableHeader={['First Name', 'Last Name', 'Email', 'Avatar', 'Actions']}
-            tableBody={mappedUserData}
+            tableBody={mappedUsers}
+            tupleKeys={tupleKeys}
             showDataLoader={isDataLoaderVisible}
           />
         </DashboardWrapper>
@@ -89,7 +96,7 @@ class Dashboard extends Component<DashboardProps> {
 
 const mapStateToProps = ({dashboardData}: AppState) => ({
   searchTerm: dashboardData.searchTerm,
-  userData: Object.values(dashboardData.userData),
+  userData: dashboardData.userData,
   isDataLoaderVisible: dashboardData.isDataLoaderVisible
 });
 
