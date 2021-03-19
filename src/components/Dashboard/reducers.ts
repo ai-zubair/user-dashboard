@@ -20,7 +20,7 @@ export const userDataReducer: Reducer<UserCollection, UserDataAction> = (userDat
     case DASH_BOARD_ACTIONS.SET_CUSTOMER_DATA:
       {
         for(const user of payload){
-          newUserData[user.id] = user
+          newUserData[user.id] = Object.assign({}, newUserData[user.id], user);
         }
       }
   }
