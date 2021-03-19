@@ -41,5 +41,6 @@ export interface CreateUserProps{
   addPassword(password: string): void;
   addFirstName(firstName: string): void;
   postNewUserData(userData: NewUser): void;
+  updateUserData(userData: NewUser, id: string): void;
   toggleUserModified(modificationState: boolean): void;
 }

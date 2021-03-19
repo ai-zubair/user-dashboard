@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { AppState } from '../../data-store/rootReducer';
-import { addFirstName, addLastName, addUserEmail, addUserPassword, postNewUserData, toggleUserModififed } from './actionCreators';
+import { addFirstName, addLastName, addUserEmail, addUserPassword, postNewUserData, toggleUserModififed, updateUserData } from './actionCreators';
 import { NewUser } from './types';
 
 const mapStateToProps = ({createNewUserData, dashboardData}: AppState) => ({
@@ -33,6 +33,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   postNewUserData(userData: NewUser){
     // @ts-ignore
     dispatch(postNewUserData(userData));
+  },
+  updateUserData(userData: NewUser, id: string){
+    // @ts-ignore
+    dispatch(updateUserData(userData, id))
   }
 })
 

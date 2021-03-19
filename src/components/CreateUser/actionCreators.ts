@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { ActionCreator, Dispatch } from 'redux';
 import { batch } from 'react-redux';
 import { CREATE_USER_ACTIONS } from './actions';
@@ -40,7 +40,7 @@ export const toggleSignUpLoader: ActionCreator<ToggleSignUpLoaderAction> = (load
   payload: loaderState
 })
 
-const flushUserCreatedState = (dispatch: Dispatch) => {
+export const flushUserCreatedState = (dispatch: Dispatch) => {
   return batch(()=>{
     dispatch(addFirstName(''));
     dispatch(addLastName(''));
@@ -70,6 +70,31 @@ export const postNewUserData = (userData: NewUser) => {
       })
     }).catch((error: any)=>{
       dispatch(setSignUpError("Could not create the User"));
+      dispatch(toggleSignUpLoader(false));
+    })
+  }
+}
+
+export const updateUserData = (userData: NewUser, id: string) => {
+  console.log(userData, id);
+  return (dispatch: Dispatch) => {
+    dispatch(toggleSignUpLoader(true));
+    axios.put(`https://reqres.in/api/users/${id}`,{
+      ...userData
+    }).then((response: AxiosResponse)=>{
+      dispatch(setUserData([{
+        id: id,
+        first_name: userData.firstName,
+        last_name: userData.lastName,
+        email: userData.email
+      }]))
+      batch(()=>{
+        dispatch(toggleSignUpLoader(false));
+        flushUserCreatedState(dispatch);
+        dispatch(toggleUserModififed(true));
+      })
+    }).catch((error: any)=>{
+      dispatch(setSignUpError("Could not update the User"));
       dispatch(toggleSignUpLoader(false));
     })
   }
