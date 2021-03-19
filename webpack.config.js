@@ -34,6 +34,7 @@ module.exports = (
         new HtmlWebpackPlugin({
           template: path.resolve(__dirname, './index.html'),
           inject: 'body',
+          publicPath: '/'
         }),
         new webpack.ProgressPlugin(),
       ],
