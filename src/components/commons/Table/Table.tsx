@@ -1,6 +1,6 @@
 import React,{FunctionComponent, ReactChild} from 'react';
 import { Spinner } from '../Spinner';
-import { TableWrapper, TableHeaderWrapper, TableBodyWrapper, TableRowWrapper, TableDataWrapper } from './TableStyled';
+import { TableWrapper, TableHeaderWrapper, TableBodyWrapper, TableRowWrapper, TableDataWrapper, SpinnerWrapper } from './TableStyled';
 
 interface TableProps {
   tableHeader: ReactChild[];
@@ -57,7 +57,11 @@ const TableBody: FunctionComponent<TableBodyProps> = ({bodyData, showDataLoader,
   return (
     <TableBodyWrapper>
       <TableRow isHidden={!showDataLoader} isSpannedFullWidth={showDataLoader} spanningWidth={spanningWidth}>
-        {[<Spinner/>]}
+        {[
+          <SpinnerWrapper>
+            <Spinner/>
+          </SpinnerWrapper>
+        ]}
       </TableRow>
       {TableRowList}
     </TableBodyWrapper>

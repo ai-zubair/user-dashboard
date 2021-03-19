@@ -38,7 +38,11 @@ export const TableRowWrapper = styled.tr`
 `;
 
 export const TableDataWrapper = styled.td<TableDataWrapperProps>`
-  display: ${props=>props.isSpannedFullWidth ? 'flex': 'table-cell'};
+`;
+
+export const SpinnerWrapper = styled.div`
+  width: 100%;
+  display: flex;
   align-items: center;
   justify-content: center;
 `;
