@@ -2,14 +2,7 @@ import { combineReducers, Reducer } from "redux";
 import { TextInputFieldAction } from "../AdminAuth/types";
 import { CREATE_USER_ACTIONS } from "./actions";
 import { NewUser, ToggleSignUpLoaderAction } from './types';
-
-const DEFAULT_CREATE_USER_STATE: NewUser = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  signUpError: ''
-}
+import { DEFAULT_CREATE_USER_STATE, DEFAULT_SIGN_UP_LOADER_STATE, DEFAULT_USER_MODIFIED_STATE } from './constants';
 
 const newUserDataReducer: Reducer<NewUser, TextInputFieldAction> = (userData = DEFAULT_CREATE_USER_STATE, { type, payload }) => {
   const newUserData = userData;
@@ -43,8 +36,6 @@ const newUserDataReducer: Reducer<NewUser, TextInputFieldAction> = (userData = D
   return Object.assign({}, userData, newUserData);
 }
 
-const DEFAULT_SIGN_UP_LOADER_STATE = false;
-
 const signUpLoaderReducer: Reducer<boolean, ToggleSignUpLoaderAction> = (signUpLoaderState = DEFAULT_SIGN_UP_LOADER_STATE, {type, payload}): boolean => {
   let newLoaderState = signUpLoaderState;
   switch(type){
@@ -58,7 +49,7 @@ const signUpLoaderReducer: Reducer<boolean, ToggleSignUpLoaderAction> = (signUpL
   return newLoaderState;
 } 
 
-const userModifiedReducer: Reducer<boolean, ToggleSignUpLoaderAction> = (signUpLoaderState = DEFAULT_SIGN_UP_LOADER_STATE, {type, payload}): boolean => {
+const userModifiedReducer: Reducer<boolean, ToggleSignUpLoaderAction> = (signUpLoaderState = DEFAULT_USER_MODIFIED_STATE, {type, payload}): boolean => {
   let newLoaderState = signUpLoaderState;
   switch(type){
     case CREATE_USER_ACTIONS.TOGGLE_USER_MODIFIED:

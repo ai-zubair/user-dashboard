@@ -1,3 +1,5 @@
+import { NewUser } from './types';
+
 export const FORM_FIELDS = {
   FIRST_NAME:{
     id: "FIRST_NAME",
@@ -28,3 +30,17 @@ export const FORM_FIELDS = {
     label: "Create User"
   }
 }
+
+export const BACK_BUTTON_LABEL = "Back";
+
+export const DEFAULT_CREATE_USER_STATE: NewUser = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  signUpError: ''
+}
+
+export const DEFAULT_SIGN_UP_LOADER_STATE = false;
+
+export const DEFAULT_USER_MODIFIED_STATE = false;
