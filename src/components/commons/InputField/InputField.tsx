@@ -9,6 +9,7 @@ interface InputFieldProps{
   fieldPlaceholder?: string;
   errorMessage?: string;
   hideLabel?: boolean;
+  isHidden?: boolean;
   validator?: (fieldValue: string)=> boolean;
   onFieldChange:(changedValue: string)=>void;
 }
@@ -24,6 +25,9 @@ export const Error = ({isHidden, errorMessage}:{errorMessage: string; isHidden: 
 }
 
 const InputField: FunctionComponent<InputFieldProps> = (props) => {
+  if(props.isHidden){
+    return null;
+  }
   const [errorHidden, toggleErrorHidden] = useState(true);
   const {fieldLabel, fieldID, fieldType, fieldValue, fieldPlaceholder, hideLabel, errorMessage = '', validator, onFieldChange} = props;
 
