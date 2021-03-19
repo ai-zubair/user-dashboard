@@ -18,6 +18,7 @@ export interface NewUser{
 
 export interface CreateNewUserState{
   userData: NewUser;
+  userModified: boolean;
   isSignUpLoaderVisible: boolean;
 }
 
@@ -27,10 +28,12 @@ export interface CreateUserProps{
   firstName: string;
   lastName: string;
   signUpError: string;
+  isUserModified: boolean;
   isSignUpLoaderVisible: boolean;
   addFirstName(firstName: string): void;
   addLastName(lastName: string): void;
   addPassword(password: string): void;
   addEmail(email: string): void;
+  toggleUserModified(modificationState: boolean): void;
   postNewUserData(userData: NewUser): void;
 }

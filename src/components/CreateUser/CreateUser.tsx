@@ -8,9 +8,10 @@ import { CreateUserWrapper } from './CreateUserStyled';
 import { FORM_FIELDS } from './constants';
 import { CreateUserProps, NewUser } from './types';
 import { AppState } from '../../data-store/rootReducer';
-import { addFirstName, addLastName, addUserEmail, addUserPassword, postNewUserData } from './actionCreators';
+import { addFirstName, addLastName, addUserEmail, addUserPassword, postNewUserData, toggleUserModififed } from './actionCreators';
+import { Redirect } from 'react-router';
 
-const AddUser: FunctionComponent<CreateUserProps> = (props) => {
+const CreateUser: FunctionComponent<CreateUserProps> = (props) => {
 
   const {
     email,
@@ -23,6 +24,8 @@ const AddUser: FunctionComponent<CreateUserProps> = (props) => {
     addLastName,
     addPassword,
     addEmail,
+    isUserModified,
+    toggleUserModified,
     postNewUserData
   } = props;
 
@@ -35,6 +38,11 @@ const AddUser: FunctionComponent<CreateUserProps> = (props) => {
   } = FORM_FIELDS;
 
   const isSignUpButtonDisabled = !FIRST_NAME.validator(firstName) || !LAST_NAME.validator(lastName) || !USERNAME.validator(email) || !PASSWORD.validator(password) || isSignUpLoaderVisible;
+
+  if(isUserModified){
+    Promise.resolve(true).then(()=>toggleUserModified(false));
+    return <Redirect to="/dashboard" push />
+  }
 
   return (
     <Fragment>
@@ -95,6 +103,7 @@ const mapStateToProps = ({createNewUserData}: AppState) => ({
   email: createNewUserData.userData.email,
   password: createNewUserData.userData.password,
   signUpError: createNewUserData.userData.signUpError,
+  isUserModified: createNewUserData.userModified,
   isSignUpLoaderVisible: createNewUserData.isSignUpLoaderVisible
 })
 
@@ -111,10 +120,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   addEmail(email: string){
     dispatch(addUserEmail(email));
   },
+  toggleUserModified(modificationState: boolean){
+    dispatch(toggleUserModififed(modificationState))
+  },
   postNewUserData(userData: NewUser){
     // @ts-ignore
     dispatch(postNewUserData(userData));
   }
 })
 
-export default connect(mapStateToProps,mapDispatchToProps)(AddUser);
+export default connect(mapStateToProps,mapDispatchToProps)(CreateUser);
