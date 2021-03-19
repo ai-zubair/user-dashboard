@@ -1,13 +1,17 @@
 import styled from "styled-components";
 
-export const DashboardWrapper = styled.div`
+interface DashboardWrapperProps{
+  isDataLoaderVisible: boolean;
+}
+
+export const DashboardWrapper = styled.div<DashboardWrapperProps>`
   margin: 10px;
   margin-top: 100px;
   background-color: #fefefe;
   box-shadow: var(--primary-box-shadow);
   table{
     width: 100%;
-    height: 478px;
+    height: ${props=>props.isDataLoaderVisible ? '567px' : 'auto'};
     tr{
       td{
         &:nth-child(1),&:nth-child(2){
