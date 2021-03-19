@@ -58,9 +58,23 @@ const signUpLoaderReducer: Reducer<boolean, ToggleSignUpLoaderAction> = (signUpL
   return newLoaderState;
 } 
 
+const userModifiedReducer: Reducer<boolean, ToggleSignUpLoaderAction> = (signUpLoaderState = DEFAULT_SIGN_UP_LOADER_STATE, {type, payload}): boolean => {
+  let newLoaderState = signUpLoaderState;
+  switch(type){
+    case CREATE_USER_ACTIONS.TOGGLE_USER_MODIFIED:
+      {
+        newLoaderState = payload;
+        break;
+      }
+  }
+
+  return newLoaderState;
+} 
+
 const createUserReducer = combineReducers({
   userData: newUserDataReducer,
-  isSignUpLoaderVisible: signUpLoaderReducer
+  isSignUpLoaderVisible: signUpLoaderReducer,
+  userModified: userModifiedReducer
 })
 
 export {createUserReducer};
