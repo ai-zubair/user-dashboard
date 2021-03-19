@@ -20,6 +20,15 @@ interface ActionButtonsProps{
   children: ReactChild[];
 }
 
+interface MapperConfig{
+  searchTerm: string;
+  stateData: {
+    isDeleteDialogBoxOpen: boolean;
+  };
+  actionHandlers: {
+    toggleDialogBox(dialogBoxState: boolean): void;
+  }
+}
 namespace Utils{
   export const ActionButtons: FunctionComponent<ActionButtonsProps> = ({children}) => {
     return(
@@ -29,20 +38,38 @@ namespace Utils{
     );
   } 
   
-  export const mapUserDataToTableTuples = (userData: User[], searchTerm: string, isDialogBoxOpen: boolean, setDialogBoxOpen:(state: boolean)=>void): [ReactChild[][], string[]] => {
-    const filteredUserData = userData.filter( user => TABLE_CONFIG.USER_CONTAINS_SEARCH(user, searchTerm))
-    const mappedUsers = filteredUserData.map( user => [
+  export const mapUserDataToTableTuples = (userData: User[], mapperConfig: MapperConfig): [ReactChild[][], string[]] => {
+    const {
+      searchTerm, 
+      stateData:{
+        isDeleteDialogBoxOpen
+      }, 
+      actionHandlers:{
+        toggleDialogBox
+      }
+    } = mapperConfig;
+    const searchFilteredUsers = userData.filter( user => TABLE_CONFIG.USER_CONTAINS_SEARCH_TERM(user, searchTerm));
+    const usersMappedToRowItems = searchFilteredUsers.map( user => [
       user.first_name,
       user.last_name,
       user.email,
       <Avatar avatarURL={user.avatar} altText={user.first_name} />,
       <ActionButtonsWrapper>
-        <Route render={({history}) => <Button buttonText="Edit" onButtonClick={()=>history.push(`/edit-user/${user.id}`)}/> }/>
-        <Button buttonText="Delete" onButtonClick={()=>setDialogBoxOpen(!isDialogBoxOpen)}/>
+        <Route 
+          render={({history}) => 
+           <Button 
+            buttonText={TABLE_CONFIG.ACTION_BUTTONS_LABELS.EDIT} 
+            onButtonClick={()=>history.push(`/edit-user/${user.id}`)}
+           />} 
+        />
+        <Button 
+          buttonText={TABLE_CONFIG.ACTION_BUTTONS_LABELS.DELETE} 
+          onButtonClick={()=>toggleDialogBox(!isDeleteDialogBoxOpen)}
+        />
       </ActionButtonsWrapper> 
     ])
-    const tupleKeys = filteredUserData.map( user => String(user.id));
-    return[mappedUsers, tupleKeys]
+    const userRowKeys = TABLE_CONFIG.TUPLE_KEY_GEN(searchFilteredUsers);
+    return [usersMappedToRowItems, userRowKeys]
   }
 }
 
@@ -58,14 +85,6 @@ const Dashboard: FunctionComponent<DashboardProps> = (props) => {
 
   const [dialogBoxOpen, setDialogBoxOpen] = useState(false);
 
-  useEffect(() => {
-    const { userData } = props;
-    const recordsAlreadyFetched = userData.length >= 6;
-    if(!recordsAlreadyFetched){
-      props.getUserData();
-    }
-  })
-
   const {
     searchTerm,
     userData,
@@ -73,7 +92,26 @@ const Dashboard: FunctionComponent<DashboardProps> = (props) => {
     isDataLoaderVisible
   } = props;
 
-  const [mappedUsers, tupleKeys] = Utils.mapUserDataToTableTuples(userData, searchTerm, dialogBoxOpen, setDialogBoxOpen);
+
+  const mapperConfig = {
+    searchTerm, 
+    stateData: {
+      isDeleteDialogBoxOpen: dialogBoxOpen
+    },
+    actionHandlers: {
+      toggleDialogBox: setDialogBoxOpen
+    }
+  }
+
+  const [mappedUsers, tupleKeys] = Utils.mapUserDataToTableTuples(userData, mapperConfig);
+
+  useEffect(() => {
+    const { userData } = props;
+    const recordsAlreadyFetched = userData.length >= 6;
+    if(!recordsAlreadyFetched){
+      props.getUserData();
+    }
+  })
 
   return (
     <Fragment>

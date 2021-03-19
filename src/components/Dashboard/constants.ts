@@ -18,7 +18,7 @@ export const TABLE_CONFIG = {
   TUPLE_KEY_GEN(userData: User[]): string[]{
     return userData.map( user => String(user.id))
   },
-  USER_CONTAINS_SEARCH(user: User, searchTerm: string){
+  USER_CONTAINS_SEARCH_TERM(user: User, searchTerm: string){
     return user.first_name.includes(searchTerm) || user.last_name.includes(searchTerm) || user.email.includes(searchTerm)
   }
 }
