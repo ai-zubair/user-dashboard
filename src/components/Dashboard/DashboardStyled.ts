@@ -44,13 +44,6 @@ export const AddUserButtonWrapper = styled.div`
   }
 `;
 
-export const UserAvatarWrapper = styled.div`
-  img{
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-  }
-`;
 export const ActionButtonsWrapper = styled.div`
   padding: 0px 120px;
   display: flex;
