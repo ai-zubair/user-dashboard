@@ -2,7 +2,7 @@ import React, { ReactChild, ReactElement } from 'react'
 import { HeaderWrapper } from './HeaderStyled';
 
 interface HeaderProps{
-  children?: ReactChild;
+  children?: ReactChild[];
 }
 
 
