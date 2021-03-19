@@ -22,6 +22,10 @@ class App extends Component {
             path="/create-user"
             component={(props: ComponentProps) => <AsyncRoute componentLoader={ModuleLoaders.createUserLoader} componentProps={props} />}
           />
+          <Route 
+            path="/edit-user/:id"
+            component={(props: ComponentProps) => <AsyncRoute componentLoader={ModuleLoaders.createUserLoader} componentProps={{...props, isEditRoute: true}} />}
+          />
         </Switch>
       </Provider>
     )
