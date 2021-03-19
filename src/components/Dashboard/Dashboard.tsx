@@ -11,7 +11,7 @@ import DialogBox from '../commons/DialogBox/DialogBox';
 
 import { DashboardWrapper, AddUserButtonWrapper, ActionButtonsWrapper } from './DashboardStyled';
 import { mapStateToProps, mapDispatchToProps } from './storeMappers';
-import { SEARCH_BAR_CONFIG, TABLE_CONFIG, ADD_USER_BUTTON_LABEL } from './constants';
+import { SEARCH_BAR_CONFIG, TABLE_CONFIG, ADD_USER_BUTTON_LABEL, DIALOG_BOX_CONFIG } from './constants';
 import { DashboardProps, User } from './types';
 
 
@@ -22,11 +22,8 @@ interface ActionButtonsProps{
 
 interface MapperConfig{
   searchTerm: string;
-  stateData: {
-    isDeleteDialogBoxOpen: boolean;
-  };
   actionHandlers: {
-    toggleDialogBox(dialogBoxState: boolean): void;
+    setDialogBoxOpen(dialogBoxState: boolean): void;
   }
 }
 namespace Utils{
@@ -41,11 +38,8 @@ namespace Utils{
   export const mapUserDataToTableTuples = (userData: User[], mapperConfig: MapperConfig): [ReactChild[][], string[]] => {
     const {
       searchTerm, 
-      stateData:{
-        isDeleteDialogBoxOpen
-      }, 
       actionHandlers:{
-        toggleDialogBox
+        setDialogBoxOpen
       }
     } = mapperConfig;
     const searchFilteredUsers = userData.filter( user => TABLE_CONFIG.USER_CONTAINS_SEARCH_TERM(user, searchTerm));
@@ -64,7 +58,7 @@ namespace Utils{
         />
         <Button 
           buttonText={TABLE_CONFIG.ACTION_BUTTONS_LABELS.DELETE} 
-          onButtonClick={()=>toggleDialogBox(!isDeleteDialogBoxOpen)}
+          onButtonClick={()=>setDialogBoxOpen(true)}
         />
       </ActionButtonsWrapper> 
     ])
@@ -95,11 +89,8 @@ const Dashboard: FunctionComponent<DashboardProps> = (props) => {
 
   const mapperConfig = {
     searchTerm, 
-    stateData: {
-      isDeleteDialogBoxOpen: dialogBoxOpen
-    },
     actionHandlers: {
-      toggleDialogBox: setDialogBoxOpen
+      setDialogBoxOpen
     }
   }
 
@@ -139,8 +130,13 @@ const Dashboard: FunctionComponent<DashboardProps> = (props) => {
         />
         <DialogBox 
           isDialogBoxShown={dialogBoxOpen}
-          dialogLabel={"You're about to permanently delete this user. Are you sure you want to proceed?"}
-          options={[OPTION,OPTION]}
+          dialogLabel={DIALOG_BOX_CONFIG.LABEL}
+          optionOneColor={DIALOG_BOX_CONFIG.CANCEL_BUTTON.COLOR}
+          optionOneLabel={DIALOG_BOX_CONFIG.CANCEL_BUTTON.LABEL}
+          onOptionOneClick={()=>setDialogBoxOpen(false)}
+          optionTwoColor={DIALOG_BOX_CONFIG.DELETE_BUTTON.COLOR}
+          optionTwoLabel={DIALOG_BOX_CONFIG.DELETE_BUTTON.LABEL}
+          onOptionTwoClick={()=>setDialogBoxOpen(false)}
         />
       </DashboardWrapper>
     </Fragment>

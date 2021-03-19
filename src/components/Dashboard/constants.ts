@@ -23,4 +23,16 @@ export const TABLE_CONFIG = {
   }
 }
 
+export const DIALOG_BOX_CONFIG = {
+  LABEL: "You're about to permanently delete this user. Are you sure you want to proceed ?",
+  CANCEL_BUTTON:{
+    LABEL: "Cancel",
+    COLOR: "#568a56"
+  },
+  DELETE_BUTTON:{
+    LABEL: "Delete",
+    COLOR: "#bf3f3f"
+  }
+}
+
 export const ADD_USER_BUTTON_LABEL = "Add User";
