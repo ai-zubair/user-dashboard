@@ -1,6 +1,6 @@
 import React, { Component, JSXElementConstructor } from 'react';
 import styled from 'styled-components';
-import { Spinner } from '../commons/Spinner';
+import { Spinner } from '../commons/Spinner/Spinner';
 
 const SpinnerWrapper = styled.div`
   height: 100vh;

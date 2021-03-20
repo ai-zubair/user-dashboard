@@ -1,5 +1,5 @@
 import React,{FunctionComponent, ReactChild} from 'react';
-import { Spinner } from '../Spinner';
+import { Spinner } from '../Spinner/Spinner';
 import { TableWrapper, TableHeaderWrapper, TableBodyWrapper, TableRowWrapper, TableDataWrapper, SpinnerWrapper } from './TableStyled';
 
 interface TableProps {

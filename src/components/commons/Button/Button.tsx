@@ -1,5 +1,5 @@
 import React,{FunctionComponent, ReactChild} from 'react';
-import { Spinner } from '../Spinner';
+import { Spinner } from '../Spinner/Spinner';
 import { ButtonWrapper } from './ButtonStyled';
 import { Error } from '../InputField/InputField'
 
