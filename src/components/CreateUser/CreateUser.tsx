@@ -1,7 +1,6 @@
 import React, { Fragment, Component} from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
 import Form from '../commons/DataForm/Form';
 import Header from '../commons/Header/Header';
 import Button from '../commons/Button/Button';
@@ -30,6 +29,23 @@ class CreateUser extends Component<CreateUserProps>{
     addPassword('');
   }
 
+  static getDerivedStateFromProps(nextProps: CreateUserProps) {
+    let {
+      isEditRoute,
+      isUserModified,
+      toggleUserModified,
+    } = nextProps;
+    const id = nextProps?.match?.params?.id;
+    const existingUser = nextProps.existingUsers[Number(id)];
+    if(isUserModified){
+      toggleUserModified(false);
+      nextProps.history.push('/dashboard');
+    }
+    if(isEditRoute && !existingUser){
+      nextProps.history.push('/dashboard');
+    }
+  }
+
   componentWillUnmount(){
     this.flushState();
   }
@@ -47,8 +63,6 @@ class CreateUser extends Component<CreateUserProps>{
       addLastName,
       addPassword,
       addEmail,
-      isUserModified,
-      toggleUserModified,
       postNewUserData,
       updateUserData
     } = this.props;
@@ -70,20 +84,9 @@ class CreateUser extends Component<CreateUserProps>{
                                     !USERNAME.validator(email) || 
                                     (isEditRoute ? false : !PASSWORD.validator(password)) || 
                                     isSignUpLoaderVisible;
-
-  
-    if(isEditRoute && !existingUser){
-      return <Redirect to="/dashboard" push />
-    }
   
     if(needToPopulateState){
       this.populateState(existingUser);
-    }
-  
-  
-    if(isUserModified){
-      Promise.resolve(true).then(()=>toggleUserModified(false));
-      return <Redirect to="/dashboard" push />;
     }
   
     return (
@@ -149,4 +152,5 @@ class CreateUser extends Component<CreateUserProps>{
   }
 }
 
+//@ts-ignore
 export default connect(mapStateToProps,mapDispatchToProps)(CreateUser);

@@ -27,6 +27,9 @@ export interface CreateNewUserState{
 
 export interface CreateUserProps{
   match: match<{id?: string}>;
+  history:{
+    push(url:string): void;
+  }
   email: string;
   password: string;
   firstName: string;
