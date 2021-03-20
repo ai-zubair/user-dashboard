@@ -78,7 +78,6 @@ export const postNewUserData = (userData: NewUser) => {
 }
 
 export const updateUserData = (userData: NewUser, id: string) => {
-  console.log(userData, id);
   return (dispatch: Dispatch) => {
     dispatch(toggleSignUpLoader(true));
     reqres.put(`/users/${id}`,{

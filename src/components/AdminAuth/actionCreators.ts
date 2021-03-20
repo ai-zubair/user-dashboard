@@ -38,7 +38,6 @@ export const postLoginData = (loginData: LoginData) => {
       email: loginData.username,
       password: loginData.password
     }).then((response: AxiosResponse)=>{
-      console.log(response);
       dispatch(toggleSubmitLoader(false));
       dispatch(setLoginToken(response.data.token));
     }).catch((error: any)=>{
