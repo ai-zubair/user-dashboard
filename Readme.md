@@ -14,3 +14,15 @@ Please follow the mention steps in order to set up the project on your local mac
 
 5. Start the development server for the project:
    `$ npm run build:dev`
+
+6. Login screen is authenticated with:
+   `email`    `eve.holt@reqres.in`
+   `password` `cityslicka`
+   as documented with the `reqres` API.
+   
+
+## Things To Know
+ - Client-end Data structures have been implemented in accordance with the latest `reqres` API schema.
+ - Application Routes are asynchronously loaded via `AsyncRoute` HOC that uses webpack's code splitting feature to emulate React's Suspense mechanism.
+
+   
