@@ -44,20 +44,22 @@ class CreateUser extends Component<CreateUserProps>{
     addPassword('');
   }
 
-  static getDerivedStateFromProps(nextProps: CreateUserProps) {
+  componentDidUpdate(prevProps: CreateUserProps) {
     let {
       isEditRoute,
-      isUserModified,
-      toggleUserModified,
-    } = nextProps;
-    const id = nextProps?.match?.params?.id;
-    const existingUser = nextProps.existingUsers[Number(id)];
+      toggleUserModified
+    } = prevProps;
+    const {
+      isUserModified
+    } = this.props;
+    const id = prevProps?.match?.params?.id;
+    const existingUser = prevProps.existingUsers[Number(id)];
     if(isUserModified){
       toggleUserModified(false);
-      nextProps.history.push('/dashboard');
+      prevProps.history.push(APP_ROUTES.DASHBOARD);
     }
     if(isEditRoute && !existingUser){
-      nextProps.history.push('/dashboard');
+      prevProps.history.push(APP_ROUTES.DASHBOARD);
     }
   }
 
