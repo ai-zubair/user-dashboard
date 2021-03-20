@@ -6,10 +6,12 @@ interface HeaderProps{
 }
 
 
+const HEADER_TEXT = 'User Dashboard';
+
 const Header = ({children}: HeaderProps): ReactElement => {
   return (
     <HeaderWrapper>
-      <p className="app-label">User Dashboard</p>
+      <p className="app-label">{HEADER_TEXT}</p>
       {children}
     </HeaderWrapper>
   )
