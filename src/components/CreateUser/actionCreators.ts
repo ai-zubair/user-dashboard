@@ -5,6 +5,7 @@ import { CREATE_USER_ACTIONS } from './actions';
 import { NewUser, TextFieldAction, ToggleSignUpLoaderAction } from './types';
 import { setUserData } from '../Dashboard/actionCreators';
 import { DEFAULT_PROFILE_AVATAR_URL, USER_CREATE_ERROR, USER_UPDATE_ERROR } from './constants';
+import { reqres } from '../../config/api';
 
 export const addFirstName: ActionCreator<TextFieldAction> = (firstName: string) => ({
   type: CREATE_USER_ACTIONS.ADD_FIRST_NAME,
@@ -54,7 +55,7 @@ export const flushUserCreatedState = (dispatch: Dispatch) => {
 export const postNewUserData = (userData: NewUser) => {
   return (dispatch: Dispatch) => {
     dispatch(toggleSignUpLoader(true));
-    axios.post('https://reqres.in/api/users',{
+    reqres.post('/users',{
       ...userData
     }).then((response)=>{
       dispatch(setUserData([{
@@ -80,7 +81,7 @@ export const updateUserData = (userData: NewUser, id: string) => {
   console.log(userData, id);
   return (dispatch: Dispatch) => {
     dispatch(toggleSignUpLoader(true));
-    axios.put(`https://reqres.in/api/users/${id}`,{
+    reqres.put(`/users/${id}`,{
       ...userData
     }).then((response: AxiosResponse)=>{
       dispatch(setUserData([{

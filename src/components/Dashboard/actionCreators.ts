@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { ActionCreator, Dispatch } from 'redux';
+import { reqres } from '../../config/api';
 import { DASH_BOARD_ACTIONS } from './actions';
 import { SearchTermAction, UserDataAction, DeleteUserAction, User, ToggleDataLoaderAction } from './types';
 
@@ -26,7 +27,7 @@ export const toggleDataLoader: ActionCreator<ToggleDataLoaderAction> = (dataLoad
 export const getUserData = () => {
   return (dispatch: Dispatch)=>{
     dispatch(toggleDataLoader(true));
-    axios.get('https://reqres.in/api/users').then((response: AxiosResponse) => {
+    reqres.get('/users').then((response: AxiosResponse) => {
       dispatch(setUserData(response.data.data));
       dispatch(toggleDataLoader(false));
     }).catch((error: any)=>{
@@ -38,7 +39,7 @@ export const getUserData = () => {
 export const removeUser = (userID: number) => {
   return (dispatch: Dispatch)=>{
     dispatch(toggleDataLoader(true));
-    axios.get(`https://reqres.in/api/users/${userID}`).then((response: AxiosResponse) => {
+    reqres.get(`/users/${userID}`).then((response: AxiosResponse) => {
       dispatch(removeUserFromStore(userID));
       dispatch(toggleDataLoader(false));
     }).catch((error: any)=>{

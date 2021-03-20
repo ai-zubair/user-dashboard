@@ -3,6 +3,7 @@ import { ActionCreator, Dispatch } from 'redux';
 import { ADMIN_AUTH_ACTIONS } from './actions';
 import { LoginData, TextInputFieldAction, ToggleSubmitLoaderAction } from './types';
 import { AUTH_EROR_MESSAGE } from './constants';
+import { reqres } from '../../config/api';
 
 export const setUserName: ActionCreator<TextInputFieldAction> = (username: string) => ({
   type: ADMIN_AUTH_ACTIONS.SET_USER_NAME,
@@ -33,7 +34,7 @@ export const postLoginData = (loginData: LoginData) => {
   return (dispatch: Dispatch) => {
     dispatch(toggleSubmitLoader(true));
     dispatch(setLoginError(''));
-    axios.post('https://reqres.in/api/login',{
+    reqres.post('/login',{
       email: loginData.username,
       password: loginData.password
     }).then((response: AxiosResponse)=>{
