@@ -19,7 +19,10 @@ export const TABLE_CONFIG = {
     return userData.map( user => String(user.id))
   },
   USER_CONTAINS_SEARCH_TERM(user: User, searchTerm: string){
-    return user.first_name.includes(searchTerm) || user.last_name.includes(searchTerm) || user.email.includes(searchTerm)
+    const caseInsensitiveSearchterm = searchTerm.toLowerCase();
+    return user.first_name.toLowerCase().includes(caseInsensitiveSearchterm) || 
+           user.last_name.toLowerCase().includes(caseInsensitiveSearchterm) || 
+           user.email.toLowerCase().includes(caseInsensitiveSearchterm);
   }
 }
 
