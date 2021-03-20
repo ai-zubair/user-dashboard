@@ -11,6 +11,7 @@ import { mapStateToProps, mapDispatchToProps } from './storeMappers';
 import { CreateUserProps } from './types';
 import { FORM_FIELDS, BACK_BUTTON_LABEL } from './constants';
 import { User } from '../Dashboard/types';
+import { APP_ROUTES } from '../../config/routes';
 
 class CreateUser extends Component<CreateUserProps>{
 
@@ -103,7 +104,7 @@ class CreateUser extends Component<CreateUserProps>{
       <Fragment>
         <Header>
           <AddUserButtonWrapper>
-            <Link to="/dashboard">
+            <Link to={APP_ROUTES.DASHBOARD}>
               <Button
                 buttonText={BACK_BUTTON_LABEL}
               />

@@ -8,6 +8,7 @@ import { AdminAuthWrapper } from './AdminAuthStyled';
 import { AdminAuthProps } from './types';
 import { FORM_FIELDS } from './constants';
 import { mapStateToProps, mapDispatchToProps } from './storeMappers';
+import { APP_ROUTES } from '../../config/routes';
 
 
 
@@ -17,7 +18,7 @@ const AdminAuth:FunctionComponent<AdminAuthProps> = (props) => {
   const isLoginButtonDisabled = !USERNAME.VALIDATOR(username) || !PASSWORD.VALIDATOR(password) || isSubmitLoaderVisible;
 
   if(loginToken){
-    return <Redirect to="/dashboard" push />
+    return <Redirect to={APP_ROUTES.DASHBOARD} push />
   }
 
   return (

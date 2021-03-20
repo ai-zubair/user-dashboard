@@ -9,8 +9,9 @@ import Avatar from '../commons/Avatar/Avatar';
 import DialogBox from '../commons/DialogBox/DialogBox';
 import { DashboardWrapper, AddUserButtonWrapper, ActionButtonsWrapper } from './DashboardStyled';
 import { mapStateToProps, mapDispatchToProps } from './storeMappers';
-import { SEARCH_BAR_CONFIG, TABLE_CONFIG, ADD_USER_BUTTON_LABEL, DIALOG_BOX_CONFIG, API_RECORD_THRESHOLD, TABLE_RECORD_THRESHOLD } from './constants';
+import { SEARCH_BAR_CONFIG, TABLE_CONFIG, ADD_USER_BUTTON_LABEL, DIALOG_BOX_CONFIG, API_RECORD_THRESHOLD, TABLE_RECORD_THRESHOLD, EDIT_ROUTE_PREFIX } from './constants';
 import { DashboardProps, ActionButtonsProps, MapperConfig, User } from './types';
+import { APP_ROUTES } from '../../config/routes';
 
 namespace Utils{
   export const ActionButtons: FunctionComponent<ActionButtonsProps> = ({children}) => {
@@ -40,7 +41,7 @@ namespace Utils{
           render={({history}) => 
            <Button 
             buttonText={TABLE_CONFIG.ACTION_BUTTONS_LABELS.EDIT} 
-            onButtonClick={()=>history.push(`/edit-user/${user.id}`)}
+            onButtonClick={()=>history.push(`${EDIT_ROUTE_PREFIX}/${user.id}`)}
            />} 
         />
         <Button 
@@ -97,7 +98,7 @@ const Dashboard: FunctionComponent<DashboardProps> = (props) => {
           onSearchtermChange={setSearchTerm}
         />
         <AddUserButtonWrapper>
-          <Link to="/create-user">
+          <Link to={APP_ROUTES.CREATE_USER}>
             <Button
               buttonText={ADD_USER_BUTTON_LABEL}
             />

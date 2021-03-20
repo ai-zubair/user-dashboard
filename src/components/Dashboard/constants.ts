@@ -40,3 +40,5 @@ export const ADD_USER_BUTTON_LABEL = "Add User";
 export const API_RECORD_THRESHOLD = 1;
 
 export const TABLE_RECORD_THRESHOLD = 0;
+
+export const EDIT_ROUTE_PREFIX = '/edit-user';
