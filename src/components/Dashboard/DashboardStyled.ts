@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 interface DashboardWrapperProps{
   isDataLoaderVisible: boolean;
+  tableHasRecords: boolean;
 }
 
 export const DashboardWrapper = styled.div<DashboardWrapperProps>`
@@ -11,7 +12,7 @@ export const DashboardWrapper = styled.div<DashboardWrapperProps>`
   box-shadow: var(--primary-box-shadow);
   table{
     width: 100%;
-    height: ${props=>props.isDataLoaderVisible ? '567px' : 'auto'};
+    height: ${props=>props.isDataLoaderVisible && !props.tableHasRecords ? '567px' : 'auto'};
     tr{
       td{
         &:nth-child(1),&:nth-child(2){

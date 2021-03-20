@@ -119,7 +119,7 @@ const Dashboard: FunctionComponent<DashboardProps> = (props) => {
           </Link>
         </AddUserButtonWrapper>
       </Header>
-      <DashboardWrapper isDataLoaderVisible={isDataLoaderVisible}>
+      <DashboardWrapper tableHasRecords={tupleKeys.length > 0} isDataLoaderVisible={isDataLoaderVisible}>
         <Table 
           tableHeader={TABLE_CONFIG.HEADER_LABELS}
           tableBody={mappedUsers}
@@ -134,7 +134,7 @@ const Dashboard: FunctionComponent<DashboardProps> = (props) => {
           onOptionOneClick={()=>setDialogBoxOpen(false)}
           optionTwoColor={DIALOG_BOX_CONFIG.DELETE_BUTTON.COLOR}
           optionTwoLabel={DIALOG_BOX_CONFIG.DELETE_BUTTON.LABEL}
-          onOptionTwoClick={()=>removeUser(activeUserID || 0)}
+          onOptionTwoClick={()=>{removeUser(activeUserID);setDialogBoxOpen(false)}}
         />
       </DashboardWrapper>
     </Fragment>
