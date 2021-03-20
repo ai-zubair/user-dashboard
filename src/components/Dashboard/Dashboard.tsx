@@ -1,32 +1,17 @@
 import React, { useState, useEffect, Fragment, FunctionComponent, ReactChild } from 'react';
 import { Link, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-
 import Button from '../commons/Button/Button';
 import Header from '../commons/Header/Header';
 import Table from '../commons/Table/Table';
 import SearchBar from '../commons/SearchBar/SearchBar';
 import Avatar from '../commons/Avatar/Avatar';
 import DialogBox from '../commons/DialogBox/DialogBox';
-
 import { DashboardWrapper, AddUserButtonWrapper, ActionButtonsWrapper } from './DashboardStyled';
 import { mapStateToProps, mapDispatchToProps } from './storeMappers';
-import { SEARCH_BAR_CONFIG, TABLE_CONFIG, ADD_USER_BUTTON_LABEL, DIALOG_BOX_CONFIG } from './constants';
-import { DashboardProps, User } from './types';
+import { SEARCH_BAR_CONFIG, TABLE_CONFIG, ADD_USER_BUTTON_LABEL, DIALOG_BOX_CONFIG, API_RECORD_THRESHOLD, TABLE_RECORD_THRESHOLD } from './constants';
+import { DashboardProps, ActionButtonsProps, MapperConfig, User } from './types';
 
-
-interface ActionButtonsProps{
-  userID: number;
-  children: ReactChild[];
-}
-
-interface MapperConfig{
-  searchTerm: string;
-  actionHandlers: {
-    setDialogBoxOpen(dialogBoxState: boolean): void;
-    setActiveUserID(userID: number): void;
-  }
-}
 namespace Utils{
   export const ActionButtons: FunctionComponent<ActionButtonsProps> = ({children}) => {
     return(
@@ -96,7 +81,7 @@ const Dashboard: FunctionComponent<DashboardProps> = (props) => {
 
   useEffect(() => {
     const { userData } = props;
-    const recordsAlreadyFetched = userData.length >= 1;
+    const recordsAlreadyFetched = userData.length >= API_RECORD_THRESHOLD;
     if(!recordsAlreadyFetched){
       props.getUserData();
     }
@@ -119,7 +104,7 @@ const Dashboard: FunctionComponent<DashboardProps> = (props) => {
           </Link>
         </AddUserButtonWrapper>
       </Header>
-      <DashboardWrapper tableHasRecords={tupleKeys.length > 0} isDataLoaderVisible={isDataLoaderVisible}>
+      <DashboardWrapper tableHasRecords={tupleKeys.length > TABLE_RECORD_THRESHOLD} isDataLoaderVisible={isDataLoaderVisible}>
         <Table 
           tableHeader={TABLE_CONFIG.HEADER_LABELS}
           tableBody={mappedUsers}
