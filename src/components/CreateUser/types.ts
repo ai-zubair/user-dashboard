@@ -1,16 +1,6 @@
 import { match } from "react-router";
 import { UserCollection } from "../Dashboard/types";
 
-export interface TextFieldAction{
-  type: string;
-  payload: string;
-}
-
-export interface ToggleSignUpLoaderAction{
-  type: string;
-  payload: boolean;
-}
-
 export interface NewUser{
   email: string;
   password: string;
@@ -46,4 +36,14 @@ export interface CreateUserProps{
   postNewUserData(userData: NewUser): void;
   updateUserData(userData: NewUser, id: string): void;
   toggleUserModified(modificationState: boolean): void;
+}
+
+export interface TextFieldAction{
+  type: string;
+  payload: string;
+}
+
+export interface ToggleSignUpLoaderAction{
+  type: string;
+  payload: boolean;
 }
