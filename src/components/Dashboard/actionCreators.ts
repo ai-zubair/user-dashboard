@@ -42,7 +42,8 @@ export const removeUser = (userID: number) => {
       dispatch(removeUserFromStore(userID));
       dispatch(toggleDataLoader(false));
     }).catch((error: any)=>{
-      
+      dispatch(removeUserFromStore(userID));
+      dispatch(toggleDataLoader(false));
     })
   }
 }
