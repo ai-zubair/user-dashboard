@@ -14,7 +14,7 @@ interface ButtonProps{
 
 const Button: FunctionComponent<ButtonProps> = ({buttonText, isButtonDisabled = false, showLoader = false, errorMessage = '', children, onButtonClick}) => {
   return (
-    <ButtonWrapper isButtonDisabled={isButtonDisabled} onClick={(event) => onButtonClick ? onButtonClick() : ()=>{}}>
+    <ButtonWrapper isButtonDisabled={isButtonDisabled} onClick={(event) => onButtonClick && typeof onButtonClick === "function" ? onButtonClick() : ()=>{}}>
       {showLoader ? null : buttonText}
       {children}
       <Spinner 

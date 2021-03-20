@@ -16,11 +16,32 @@ interface InputFieldProps{
 
 export type InputFieldType = "text" | "password";
 
-export const Error = ({isHidden, errorMessage}:{errorMessage: string; isHidden: boolean;})=>{
+interface ErrorProps{
+  errorMessage: string;
+  isHidden: boolean;
+}
+
+interface LabelProps{
+  isHidden: boolean; 
+  labelFor: string; 
+  labelText: string;
+}
+
+export const Error: FunctionComponent<ErrorProps> = ({isHidden, errorMessage}) => {
   if(isHidden)
     return null;
   return(
     <ErrorWrapper>{errorMessage}</ErrorWrapper>
+  )
+}
+
+const InputLabel: FunctionComponent<LabelProps> = ({isHidden, labelFor, labelText}) => {
+  if(isHidden)
+    return null;
+  return(
+    <label htmlFor={labelFor}>
+      {labelText}
+    </label>
   )
 }
 
@@ -29,11 +50,11 @@ const InputField: FunctionComponent<InputFieldProps> = (props) => {
     return null;
   }
   const [errorHidden, toggleErrorHidden] = useState(true);
-  const {fieldLabel, fieldID, fieldType, fieldValue, fieldPlaceholder, hideLabel, errorMessage = '', validator, onFieldChange} = props;
+  const {fieldLabel = '', fieldID, fieldType, fieldValue, fieldPlaceholder, hideLabel = false, errorMessage = '', validator, onFieldChange} = props;
 
   return (
     <InputFieldWrapper>
-      {hideLabel ? null : <label htmlFor={fieldID}>{fieldLabel}</label> }
+      <InputLabel isHidden={hideLabel} labelFor={fieldID} labelText={fieldLabel} />
       <input 
         id={fieldID} 
         type={fieldType} 

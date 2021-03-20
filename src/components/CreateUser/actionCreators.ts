@@ -4,6 +4,7 @@ import { batch } from 'react-redux';
 import { CREATE_USER_ACTIONS } from './actions';
 import { NewUser, TextFieldAction, ToggleSignUpLoaderAction } from './types';
 import { setUserData } from '../Dashboard/actionCreators';
+import { DEFAULT_PROFILE_AVATAR_URL, USER_CREATE_ERROR, USER_UPDATE_ERROR } from './constants';
 
 export const addFirstName: ActionCreator<TextFieldAction> = (firstName: string) => ({
   type: CREATE_USER_ACTIONS.ADD_FIRST_NAME,
@@ -61,7 +62,7 @@ export const postNewUserData = (userData: NewUser) => {
         first_name: response.data.firstName,
         last_name: response.data.lastName,
         email: response.data.email,
-        avatar: 'https://images.unsplash.com/photo-1564932436587-c6ea959a4053?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=860&q=80',
+        avatar: DEFAULT_PROFILE_AVATAR_URL,
       }]))
       batch(()=>{
         dispatch(toggleSignUpLoader(false));
@@ -69,7 +70,7 @@ export const postNewUserData = (userData: NewUser) => {
         dispatch(toggleUserModififed(true));
       })
     }).catch((error: any)=>{
-      dispatch(setSignUpError("Could not create the User"));
+      dispatch(setSignUpError(USER_CREATE_ERROR));
       dispatch(toggleSignUpLoader(false));
     })
   }
@@ -94,7 +95,7 @@ export const updateUserData = (userData: NewUser, id: string) => {
         dispatch(toggleUserModififed(true));
       })
     }).catch((error: any)=>{
-      dispatch(setSignUpError("Could not update the User"));
+      dispatch(setSignUpError(USER_UPDATE_ERROR));
       dispatch(toggleSignUpLoader(false));
     })
   }

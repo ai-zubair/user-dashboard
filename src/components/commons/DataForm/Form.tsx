@@ -13,7 +13,7 @@ interface FormProps{
 
 const Form: FunctionComponent<FormProps> = ({children, submitButtonText, onSubmit, showSubmitLoader, submitErrorMessage, isSubmitButtonDisabled}) => {
   return (
-    <FormWrapper onSubmit={isSubmitButtonDisabled ? (event) => {event.preventDefault()}: (event)=>{event.preventDefault(),onSubmit()}}>
+    <FormWrapper onSubmit={(event) => {event.preventDefault(); !isSubmitButtonDisabled && onSubmit()}}>
       {children}
       <Button 
         showLoader={showSubmitLoader} 

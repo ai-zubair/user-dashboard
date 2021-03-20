@@ -14,6 +14,20 @@ import { User } from '../Dashboard/types';
 
 class CreateUser extends Component<CreateUserProps>{
 
+  id?: string;
+  existingUser?: User;
+
+  constructor(props: CreateUserProps){
+    super(props);
+    const {isEditRoute, email} = props;
+    this.id = this.props?.match?.params?.id;
+    this.existingUser = this.props.existingUsers[Number(this.id)];
+    const needToPopulateState = isEditRoute && (!email || this.existingUser.email !== email);
+    if(needToPopulateState){
+      this.populateState(this.existingUser);
+    }
+  } 
+
   populateState = (existingUser: User) => {
     const { addFirstName, addLastName, addEmail} = this.props;
     addFirstName(existingUser.first_name);
@@ -75,19 +89,15 @@ class CreateUser extends Component<CreateUserProps>{
       SUBMIT
     } = FORM_FIELDS;
   
-    const id = this.props?.match?.params?.id;
-    const existingUser = this.props.existingUsers[Number(id)];
-    const needToPopulateState = isEditRoute && (!email || existingUser.email !== email);
-    const submitButtonHandler = isEditRoute && id &&existingUser ? () => updateUserData({firstName,lastName,email,password,signUpError},id) : () => postNewUserData({firstName,lastName,email,password,signUpError});
-    const isSignUpButtonDisabled =  !FIRST_NAME.validator(firstName) || 
-                                    !LAST_NAME.validator(lastName) || 
-                                    !USERNAME.validator(email) || 
-                                    (isEditRoute ? false : !PASSWORD.validator(password)) || 
+    const submitButtonHandler = isEditRoute && this.id && this.existingUser ? 
+                                () => updateUserData({firstName,lastName,email,password,signUpError},this.id as string) : 
+                                () => postNewUserData({firstName,lastName,email,password,signUpError});
+
+    const isSignUpButtonDisabled =  !FIRST_NAME.VALIDATOR(firstName) || 
+                                    !LAST_NAME.VALIDATOR(lastName) || 
+                                    !USERNAME.VALIDATOR(email) || 
+                                    (isEditRoute ? false : !PASSWORD.VALIDATOR(password)) || 
                                     isSignUpLoaderVisible;
-  
-    if(needToPopulateState){
-      this.populateState(existingUser);
-    }
   
     return (
       <Fragment>
@@ -102,47 +112,47 @@ class CreateUser extends Component<CreateUserProps>{
         </Header>
         <CreateUserWrapper>
           <Form 
-            submitButtonText={ isEditRoute ? "Update" : SUBMIT.label}
+            submitButtonText={ isEditRoute ? SUBMIT.UPDATE_LABEL : SUBMIT.LABEL}
             submitErrorMessage={signUpError}
             isSubmitButtonDisabled={isSignUpButtonDisabled}
             showSubmitLoader={isSignUpLoaderVisible} 
             onSubmit={submitButtonHandler} 
           >
           <InputFormField 
-              fieldID={FIRST_NAME.id} 
-              fieldLabel={FIRST_NAME.label} 
+              fieldID={FIRST_NAME.ID} 
+              fieldLabel={FIRST_NAME.LABEL} 
               fieldType={"text"}
               fieldValue={firstName} 
-              errorMessage={FIRST_NAME.errorMessage}
-              validator={FIRST_NAME.validator}
+              errorMessage={FIRST_NAME.ERROR_MESSAGE}
+              validator={FIRST_NAME.VALIDATOR}
               onFieldChange={addFirstName} 
             />
           <InputFormField 
-              fieldID={LAST_NAME.id} 
-              fieldLabel={LAST_NAME.label} 
+              fieldID={LAST_NAME.ID} 
+              fieldLabel={LAST_NAME.LABEL} 
               fieldType={"text"}
               fieldValue={lastName} 
-              errorMessage={LAST_NAME.errorMessage}
-              validator={LAST_NAME.validator}
+              errorMessage={LAST_NAME.ERROR_MESSAGE}
+              validator={LAST_NAME.VALIDATOR}
               onFieldChange={addLastName} 
             />
           <InputFormField 
-              fieldID={USERNAME.id} 
-              fieldLabel={USERNAME.label} 
+              fieldID={USERNAME.ID} 
+              fieldLabel={USERNAME.LABEL} 
               fieldType={"text"}
               fieldValue={email} 
-              errorMessage={USERNAME.errorMessage}
-              validator={USERNAME.validator}
+              errorMessage={USERNAME.ERROR_MESSAGE}
+              validator={USERNAME.VALIDATOR}
               onFieldChange={addEmail} 
             />
           <InputFormField 
               isHidden={isEditRoute}
-              fieldID={PASSWORD.id} 
-              fieldLabel={PASSWORD.label} 
+              fieldID={PASSWORD.ID} 
+              fieldLabel={PASSWORD.LABEL} 
               fieldType="password"
               fieldValue={password} 
-              errorMessage={PASSWORD.errorMessage}
-              validator={PASSWORD.validator}
+              errorMessage={PASSWORD.ERROR_MESSAGE}
+              validator={PASSWORD.VALIDATOR}
               onFieldChange={addPassword} 
             />
           </Form>
