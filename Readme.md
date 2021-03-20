@@ -14,6 +14,7 @@ Please follow the mention steps in order to set up the project on your local mac
 
 5. Start the development server for the project:
    `$ npm run build:dev`
+   The dev server is listening at `localhost:8080` . Make sure the port isn't already in use.
 
 6. Login screen is authenticated with:
    `email`    `eve.holt@reqres.in`
