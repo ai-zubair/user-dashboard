@@ -96,7 +96,7 @@ const Dashboard: FunctionComponent<DashboardProps> = (props) => {
 
   useEffect(() => {
     const { userData } = props;
-    const recordsAlreadyFetched = userData.length >= 6;
+    const recordsAlreadyFetched = userData.length >= 1;
     if(!recordsAlreadyFetched){
       props.getUserData();
     }

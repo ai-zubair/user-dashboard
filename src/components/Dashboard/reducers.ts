@@ -1,6 +1,6 @@
 import { Reducer, combineReducers } from 'redux';
 import { DASH_BOARD_ACTIONS } from './actions';
-import { SearchTermAction, UserDataAction, User, ToggleDataLoaderAction, UserCollection } from './types';
+import { SearchTermAction, UserDataAction, User, ToggleDataLoaderAction, UserCollection, DeleteUserAction } from './types';
 import { DEFAULT_SEARCH_TERM, DEFAULT_USER_COLLECTION, DEFAULT_DATA_LOADER_STATE } from './constants';
 
 const searchTermReducer: Reducer<string, SearchTermAction> = (searchTerm = DEFAULT_SEARCH_TERM, {type, payload}) => {
@@ -14,17 +14,29 @@ const searchTermReducer: Reducer<string, SearchTermAction> = (searchTerm = DEFAU
   return newSearchTerm;
 }
 
-export const userDataReducer: Reducer<UserCollection, UserDataAction> = (userDataCollection = DEFAULT_USER_COLLECTION, {type, payload}) => {
-  let newUserData = userDataCollection;
+export const userDataReducer: Reducer<UserCollection, UserDataAction | DeleteUserAction> = (userDataCollection = DEFAULT_USER_COLLECTION, {type, payload}) => {
+  let newUserData:{[userID: number]: User} = {...userDataCollection};
+  for(const userID in newUserData){
+    newUserData[userID] = {...userDataCollection[userID]}
+  }
+
   switch(type){
     case DASH_BOARD_ACTIONS.SET_CUSTOMER_DATA:
       {
-        for(const user of payload){
-          newUserData[user.id] = Object.assign({}, newUserData[user.id], user);
+        if(typeof payload !== "number"){
+          for(const user of payload){
+            newUserData[user.id] = {...newUserData[user.id], ...user,};
+          }
         }
+        break;
+      }
+    case DASH_BOARD_ACTIONS.DELETE_CUSTOMER_DATA:
+      {
+        const {[payload as number]: skip, ...newUserDataWithout} = newUserData;
+        return newUserDataWithout;
       }
   }
-  return Object.assign({}, userDataCollection, newUserData);
+  return newUserData;
 }
 
 export const toggleDataLoaderReducer: Reducer<boolean, ToggleDataLoaderAction> = (dataLoaderState = DEFAULT_DATA_LOADER_STATE, {type, payload}) =>{
